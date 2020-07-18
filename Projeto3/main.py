@@ -4,6 +4,7 @@ import time
 import numpy as np
 import pandas as pd
 from pandas import Index
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 from methods.cost_calculus import CostCalculus
 from methods.logistic_regressor import LogisticRegressor
@@ -191,40 +192,49 @@ def scikit_multinomial_logistic_regression(args, classes, train_set_x, train_set
         ConfusionMatrix.plot_confusion_matrix(test_set_y, model.predict(test_set_x), classes)
 
 def number_labels(df):
+    # le = LabelEncoder()
+    # ohe = OneHotEncoder()
+    #
+    # le.fit(df)
+    # ohe.fit(df)
+    #
+    # print(le.transform(df))
+    # print(ohe.transform(df))
+
     df.job = df.job.astype('category').cat.rename_categories({
         'admin.': 1, 'blue-collar': 2, 'entrepreneur': 3, 'housemaid': 4, 'management': 5,
        'retired': 6, 'self-employed': 7, 'services': 8, 'student': 9, 'technician': 10,
        'unemployed': 11, 'unknown': 12
-    })
+    }).astype(int)
     df.marital = df.marital.astype('category').cat.rename_categories({
         'divorced': 1, 'married': 2, 'single': 3, 'unknown': 4
-    })
+    }).astype(int)
     df.education = df.education.astype('category').cat.rename_categories({
         'basic.4y': 1, 'basic.6y': 2, 'basic.9y': 3, 'high.school': 4, 'illiterate': 5,
        'professional.course': 6, 'university.degree': 7, 'unknown': 8
-    })
+    }).astype(int)
     df.default = df.default.astype('category').cat.rename_categories({
         'no': 0, 'unknown': 2, 'yes': 1
     })
     df.housing = df.housing.astype('category').cat.rename_categories({
         'no': 0, 'unknown': 2, 'yes': 1
-    })
+    }).astype(int)
     df.loan = df.loan.astype('category').cat.rename_categories({
         'no': 0, 'unknown': 2, 'yes': 1
-    })
+    }).astype(int)
     df.contact = df.contact.astype('category').cat.rename_categories({
         'cellular': 1, 'telephone': 2
-    })
+    }).astype(int)
     df.month = df.month.astype('category').cat.rename_categories({
         'apr': 4, 'aug': 8, 'dec': 12, 'jul': 7, 'jun': 6, 'mar': 3, 'may': 5, 'nov': 11, 'oct': 10, 'sep': 9
-    })
+    }).astype(int)
     df.day_of_week = df.day_of_week.astype('category').cat.rename_categories({
         'fri': 5, 'mon': 1, 'thu': 2, 'tue': 4, 'wed': 3
-    })
+    }).astype(int)
     df.poutcome = df.poutcome.astype('category').cat.rename_categories({
         'failure': 0, 'nonexistent': 2, 'success': 1
-    })
-    df.y = df.y.astype('category').cat.rename_categories({'no': 0, 'yes': 1})
+    }).astype(int)
+    df.y = df.y.astype('category').cat.rename_categories({'no': 0, 'yes': 1}).astype(int)
     print(df)
 
     return df
@@ -247,16 +257,16 @@ def init_dataset(args):
     print('Validation set dimensions (', FRAC_VALIDATION * 100.0, '% ):', validation_set.shape)
 
     # Split training set in variables(x) and target(y)
-    training_set_x = training_set.iloc[:, 1:training_set.shape[1]]
-    training_set_y = training_set.iloc[:, 0]
+    training_set_x = training_set.iloc[:, :-1]
+    training_set_y = training_set.iloc[:, -1]
 
     # Split validation set in variables(x) and target(y)
-    validation_set_x = validation_set.iloc[:, 1:validation_set.shape[1]]
-    validation_set_y = validation_set.iloc[:, 0]
+    validation_set_x = validation_set.iloc[:, :-1]
+    validation_set_y = validation_set.iloc[:, -1]
 
     # Split validation set in variables(x) and target(y)
-    test_set_x = test_set.iloc[:, 1:test_set.shape[1]]
-    test_set_y = test_set.iloc[:, 0]
+    test_set_x = test_set.iloc[:, :-1]
+    test_set_y = test_set.iloc[:, -1]
 
     # Data pre-processing
     training_set_x, training_mean, training_std = normalize(training_set_x.values)
