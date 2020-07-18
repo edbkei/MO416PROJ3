@@ -3,8 +3,6 @@ import time
 
 import numpy as np
 import pandas as pd
-from pandas import Index
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 from methods.cost_calculus import CostCalculus
 from methods.logistic_regressor import LogisticRegressor
@@ -191,16 +189,7 @@ def scikit_multinomial_logistic_regression(args, classes, train_set_x, train_set
     if (args.plot_confusion_matrix):
         ConfusionMatrix.plot_confusion_matrix(test_set_y, model.predict(test_set_x), classes)
 
-def number_labels(df):
-    # le = LabelEncoder()
-    # ohe = OneHotEncoder()
-    #
-    # le.fit(df)
-    # ohe.fit(df)
-    #
-    # print(le.transform(df))
-    # print(ohe.transform(df))
-
+def label_encode(df):
     df.job = df.job.astype('category').cat.rename_categories({
         'admin.': 1, 'blue-collar': 2, 'entrepreneur': 3, 'housemaid': 4, 'management': 5,
        'retired': 6, 'self-employed': 7, 'services': 8, 'student': 9, 'technician': 10,
@@ -239,10 +228,27 @@ def number_labels(df):
 
     return df
 
+def one_hot_encode(df):
+    cat_vars = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'day_of_week',
+                'poutcome']
+    for var in cat_vars:
+        cat_list = pd.get_dummies(df[var], prefix=var)
+        df = df.join(cat_list)
+        df = df.drop(var, axis=1)
+
+    cols = df.columns.tolist()
+    cols = cols[0:9] + cols[11:] + cols[10:11]
+    df = df[cols]
+
+    df.y = df.y.astype('category').cat.rename_categories({'no': 0, 'yes': 1}).astype(int)
+    print(df)
+
+    return df
+
 def init_dataset(args):
     print("Initializing dataset...")
 
-    df_ds = number_labels(pd.read_csv(args.dataset,header=0,sep=';'))
+    df_ds = one_hot_encode(pd.read_csv(args.dataset,header=0,sep=';'))
     test_set = df_ds.sample(frac=FRAC_TEST, random_state=1)
     df_train = df_ds.drop(test_set.index)
 
