@@ -2,19 +2,19 @@
 %% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
 %% Traduzido para o congresso de IC da USP
 %%*****************************************************************************
-% N„o modificar
+% N√£o modificar
 
 \documentclass[twoside,conference,a4paper]{IEEEtran}
 
 %******************************************************************************
-% N„o modificar
-\usepackage{IEEEtsup} % DefiniÁıes complementares e modificaÁıes.
+% N√£o modificar
+\usepackage{IEEEtsup} % Defini√ß√µes complementares e modifica√ß√µes.
 \usepackage[latin1]{inputenc} % Disponibiliza acentos.
 \usepackage[english,brazil]{babel}
-%% Disponibiliza InglÍs e PortuguÍs do Brasil.
+%% Disponibiliza Ingl√™s e Portugu√™s do Brasil.
 \usepackage{latexsym,amsfonts,amssymb} % Disponibiliza fontes adicionais.
 \usepackage{theorem} 
-\usepackage[cmex10]{amsmath} % Pacote matem·tico b·sico 
+\usepackage[cmex10]{amsmath} % Pacote matem√°tico b√°sico 
 \usepackage{url} 
 %\usepackage[portuges,brazil,english]{babel}
 \usepackage{graphicx}
@@ -25,7 +25,7 @@
 \usepackage{ifluatex}
 \usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
 \usepackage[tight,footnotesize]{subfigure} 
-\usepackage[noadjust]{cite} % Disponibiliza melhorias em citaÁıes.
+\usepackage[noadjust]{cite} % Disponibiliza melhorias em cita√ß√µes.
 %%*****************************************************************************
 
 \begin{document}
@@ -35,17 +35,17 @@
 %%*****************************************************************************
 
 \urlstyle{tt}
-% Indicar o nome do autor e o curso/nÌvel (grad-mestrado-doutorado-especial)
-\title{Previs„o do sucesso de chamadas de telemarketing sobre vendas de depÛsito banc·rio a longo prazo}
+% Indicar o nome do autor e o curso/n√≠vel (grad-mestrado-doutorado-especial)
+\title{Previs√£o do sucesso de chamadas de telemarketing sobre vendas de dep√≥sito banc√°rio a longo prazo}
 \author{%
  \IEEEauthorblockN{E. S. Ito\,\IEEEauthorrefmark{1}}
  \IEEEauthorblockA{\IEEEauthorrefmark{1}%
-                   CiÍncia da ComputaÁ„o - Mestrado \\
+                   Ci√™ncia da Computa√ß√£o - Mestrado \\
                    E-mail: e159086@dac.unicamp.br}
                
  \IEEEauthorblockN{T. E. Nazatto\,\IEEEauthorrefmark{2}}
  \IEEEauthorblockA{\IEEEauthorrefmark{2}%
-	CiÍncia da ComputaÁ„o - Mestrado \\
+	Ci√™ncia da Computa√ß√£o - Mestrado \\
 	E-mail: t074388@dac.unicamp.br}
 }
 
@@ -56,20 +56,20 @@
 %%*****************************************************************************
 % Resumo do trabalho
 \begin{abstract}
-Aqui avaliamos a eficiÍncia da promoÁ„o de vendas de depÛsitos banc·rios a longo prazo para um banco portuguÍs por meio de chamadas de telemarketing. Os dados utilizados foram doados e agora publicamente disponÌveis para pesquisa no sÌtio UCI Machine Learning Repository \cite{UCI:2014}. Os dados possuem 20 vari·veis (features) que potencialmente poderiam influenciar a subscriÁ„o do cliente ao programa de depÛsito banc·rio. Os mesmos ser„o utilizados submetidos ‡s fases da abordagem do aprendizado de m·quina: extraÁ„o dos dados, preparaÁ„o dos dados, seleÁ„o de features, treinamento dos dados utilizando Regress„o LogÌstica. Esses 3 modelos foram treinados com uma amostra com 90\% dos dados e treinado com uma amostra de teste com 10\% dos dados, disponibilizados pela UCI. A acur·cia para os 3 modelos foram de 85\% (???). Apenas 7\% (foram influenciados pela promoÁ„o (???)
+Aqui avaliamos a efici√™ncia da promo√ß√£o de vendas de dep√≥sitos banc√°rios a longo prazo para um banco portugu√™s por meio de chamadas de telemarketing. Os dados utilizados foram doados e agora publicamente dispon√≠veis para pesquisa no s√≠tio UCI Machine Learning Repository \cite{UCI:2014}. Os dados possuem 20 vari√°veis (features) que potencialmente poderiam influenciar a subscri√ß√£o do cliente ao programa de dep√≥sito banc√°rio. Os mesmos ser√£o utilizados submetidos √†s fases da abordagem do aprendizado de m√°quina: extra√ß√£o dos dados, prepara√ß√£o dos dados, sele√ß√£o de features, treinamento dos dados utilizando Regress√£o Log√≠stica. Esses 3 modelos foram treinados com uma amostra com 90\% dos dados e treinado com uma amostra de teste com 10\% dos dados, disponibilizados pela UCI. A acur√°cia para os 3 modelos foram de 85\% (???). Apenas 7\% (foram influenciados pela promo√ß√£o (???)
 \end{abstract}
 
-% Indique trÍs palavras-chave que descrevem o trabalho
+% Indique tr√™s palavras-chave que descrevem o trabalho
 \begin{IEEEkeywords}
- Machine Learning (ML), dataset (DS), Regress„o LogÌstica (RL).
+ Machine Learning (ML), dataset (DS), Regress√£o Log√≠stica (RL).
 \end{IEEEkeywords}
 
 %%*****************************************************************************
-% Modifique as seÁıes de acordo com o seu projeto
+% Modifique as se√ß√µes de acordo com o seu projeto
 
-\section{IntroduÁ„o}
+\section{Introdu√ß√£o}
 
-Regress„o LogÌstica em Machine Learning È uma tÈcnica de aprendizado supervisionado que consiste na regress„o de um modelo matem·tico que relaciona vari·veis de entrada $X{_i} (i=1,2,...,n)$ a diferentes grupos de classificaÁ„o. Para isso, È usada a funÁ„o \textit{Sigmoid} para determinar a probabilidade de um determinado conjunto de vari·veis a pertencerem a determinado grupo:
+Regress√£o Log√≠stica em Machine Learning √© uma t√©cnica de aprendizado supervisionado que consiste na regress√£o de um modelo matem√°tico que relaciona vari√°veis de entrada $X{_i} (i=1,2,...,n)$ a diferentes grupos de classifica√ß√£o. Para isso, √© usada a fun√ß√£o \textit{Sigmoid} para determinar a probabilidade de um determinado conjunto de vari√°veis a pertencerem a determinado grupo:
 
 \begin{ceqn}
 \begin{align}
@@ -77,7 +77,7 @@ h_{\theta}(x) = \frac{1}{1+e^{-\theta^{T}x}}
 \end{align}
 \end{ceqn}
 
-Como j· visto anteriormente em Regressıes Lineares, na Regress„o LogÌstica o melhor modelo de classificaÁ„o È encontrado atravÈs da utilizaÁ„o do algoritmo de Gradiente Descendente, atualizando os valores de $\theta{_j}$ atÈ encontrar o minÌmo da funÁ„o custo $J$:
+Como j√° visto anteriormente em Regress√µes Lineares, na Regress√£o Log√≠stica o melhor modelo de classifica√ß√£o √© encontrado atrav√©s da utiliza√ß√£o do algoritmo de Gradiente Descendente, atualizando os valores de $\theta{_j}$ at√© encontrar o min√≠mo da fun√ß√£o custo $J$:
 	
 \begin{ceqn}
 \begin{align}
@@ -85,180 +85,187 @@ J(\theta) = -\frac{1}{m}\displaystyle\sum_{i=1}^{m}y^{(i)}log(h_{\theta}(x^{(i)}
 \end{align}
 \end{ceqn}
 
-Quando o melhor modelo de classificaÁ„o È encontrado, tal classificaÁ„o est· relacionado apenas a uma classe, sendo considerado um modelo de classificaÁ„o bin·ria por apenas determinar se um dado pode ser considerado da classe em quest„o ou n„o.
+Quando o melhor modelo de classifica√ß√£o √© encontrado, tal classifica√ß√£o est√° relacionado apenas a uma classe, sendo considerado um modelo de classifica√ß√£o bin√°ria por apenas determinar se um dado pode ser considerado da classe em quest√£o ou n√£o.
 
-A escolha do tema de eficiÍncia da campanha de vendas de depÛsitos banc·rios a termo foi baseado no artigo de Moro et al \cite{Moro:2014} e da disponibilidade dos dados no RepositÛrio de Dados de Machine Learning da UCI \cite{UCI:2014}. O artigo refere-se ‡ campanha de um banco portuguÍs para obter mais clientes para um produto oferecido sobre depÛsitos banc·rios a termo, uma espÈcie de CDB do Brasil, cuja taxa de juro È baseada no euribor3m, que È uma taxa interbanc·ria entre bancos da Uni„o EuropÈia, com duraÁ„o de 3 meses. A campanha foi realizada por meio de chamadas telefÙnicas ao telefone fixo residencial ou ao celular do potencial cliente. Uma abordagem ao cliente È realizada com uma certa duraÁ„o onde s„o explicado o produto de venda em quest„o e anotados uma sÈrie de dados do perfil do cliente e tambÈm do momento sÛcio econÙmico. Alguns aceitam a subscriÁ„o banc·ria em troca do pagamento do juros apÛs 3 meses, baseado na taxa euribor3m, outros simplesmente n„o aceitam. 
+A escolha do tema de efici√™ncia da campanha de vendas de dep√≥sitos banc√°rios a termo foi baseado no artigo de Moro et al \cite{Moro:2014} e da disponibilidade dos dados no Reposit√≥rio de Dados de Machine Learning da UCI \cite{UCI:2014}. O artigo refere-se √† campanha de um banco portugu√™s para obter mais clientes para um produto oferecido sobre dep√≥sitos banc√°rios a termo, uma esp√©cie de CDB do Brasil, cuja taxa de juro √© baseada no euribor3m, que √© uma taxa interbanc√°ria entre bancos da Uni√£o Europ√©ia, com dura√ß√£o de 3 meses. A campanha foi realizada por meio de chamadas telef√¥nicas ao telefone fixo residencial ou ao celular do potencial cliente. Uma abordagem ao cliente √© realizada com uma certa dura√ß√£o onde s√£o explicado o produto de venda em quest√£o e anotados uma s√©rie de dados do perfil do cliente e tamb√©m do momento s√≥cio econ√¥mico. Alguns aceitam a subscri√ß√£o banc√°ria em troca do pagamento do juros ap√≥s 3 meses, baseado na taxa euribor3m, outros simplesmente n√£o aceitam. 
 
-Assim o banco gostaria de saber o que influencia o cliente na subscriÁ„o ao produto de venda em quest„o, se h· possibilidade de prediÁ„o de subscriÁ„o ao produto e quais dados do perfil do cliente ou quais dados do momento sÛcio econÙmico influenciam essa prediÁ„o, porque se o custo-benefÌcio de contratar uma empresa de telemarketing n„o compensar, poderia simplesmente diminuir o gasto com propaganda de acordo com Moro et al. \cite{Moro:2014}.
+Assim o banco gostaria de saber o que influencia o cliente na subscri√ß√£o ao produto de venda em quest√£o, se h√° possibilidade de predi√ß√£o de subscri√ß√£o ao produto e quais dados do perfil do cliente ou quais dados do momento s√≥cio econ√¥mico influenciam essa predi√ß√£o, porque se o custo-benef√≠cio de contratar uma empresa de telemarketing n√£o compensar, poderia simplesmente diminuir o gasto com propaganda de acordo com Moro et al. \cite{Moro:2014}.
 
-O artigo de Moro et al \cite{Moro:2014} e a disponibilidade p˙blica do dataset na UCI \cite{UCI:2014}, tambÈm encontrado no sÌtio kaggle.com, junto com conte˙do dado nas aulas de InteligÍncia Artificial (MO416A), nos encorajaram a exercitar o tÛpico de machine learning.
+O artigo de Moro et al \cite{Moro:2014} e a disponibilidade p√∫blica do dataset na UCI \cite{UCI:2014}, tamb√©m encontrado no s√≠tio kaggle.com, junto com conte√∫do dado nas aulas de Intelig√™ncia Artificial (MO416A), nos encorajaram a exercitar o t√≥pico de machine learning.
 
-Nos dados disponibilizados no sÌtio da UCI \cite{UCI:2014}, observou-se que se tratava de uma caso tÌpico de aprendizado supervisionado, onde a vari·vel dependente È simplesmente aceitaÁ„o ou n„o da subscriÁ„o banc·ria e os dados independentes eram valores categÛricos (e.g. profiss„o, estado conjugal, educaÁ„o, etc.) e dados numÈricos (e.g. idade, n˙mero de contatos, valor do euribor3m, etc.).
+Nos dados disponibilizados no s√≠tio da UCI \cite{UCI:2014}, observou-se que se tratava de uma caso t√≠pico de aprendizado supervisionado, onde a vari√°vel dependente √© simplesmente aceita√ß√£o ou n√£o da subscri√ß√£o banc√°ria e os dados independentes eram valores categ√≥ricos (e.g. profiss√£o, estado conjugal, educa√ß√£o, etc.) e dados num√©ricos (e.g. idade, n√∫mero de contatos, valor do euribor3m, etc.).
 
-Dois artigos, em especial, nos serviram de guia para a elaboraÁ„o deste artigo. O primeiro foi um artigo da Susan Li \cite{TowardsDataScience:2017} que descreve como a preparaÁ„o dos dataset de treinamento deve ser feito, balanceamento de amostra com a utilizaÁ„o da tÈcnica SMOTE (Synthetic Minority Over-sampling Technique) onde se mostra como balancear amostras com respostas positivas ‡ subscriÁ„o e com respostas negativas ‡ subscriÁ„o, bem como reduÁ„o de features por meio da tÈcnica RFE (Recursive Feature Elimination), tÈcnicas segundo as quais diminuiria casos de Falsos Positivos. E o artigo Nelson Chris \cite{Medium:2019} que utiliza um tÈcnica de Feature Engineering, onde se cria um novo campo a partir do campo pdays para representar se ouve contato anterior ou n„o. Este campo tem uma valor especÌfico 999 que È usado para quando nunca ouve um prÈvio contato com o cliente, e em outras vezes os valores representam dias passados desde o ˙ltimo contato. Ambos os artigos mostram como tratar de vari·veis dummy para vari·veis categÛricas.
+Dois artigos, em especial, nos serviram de guia para a elabora√ß√£o deste artigo. O primeiro foi um artigo da Susan Li \cite{TowardsDataScience:2017} que descreve como a prepara√ß√£o dos dataset de treinamento deve ser feito, balanceamento de amostra com a utiliza√ß√£o da t√©cnica SMOTE (Synthetic Minority Over-sampling Technique) onde se mostra como balancear amostras com respostas positivas √† subscri√ß√£o e com respostas negativas √† subscri√ß√£o, bem como redu√ß√£o de features por meio da t√©cnica RFE (Recursive Feature Elimination), t√©cnicas segundo as quais diminuiria casos de Falsos Positivos. E o artigo Nelson Chris \cite{Medium:2019} que utiliza um t√©cnica de Feature Engineering, onde se cria um novo campo a partir do campo pdays para representar se ouve contato anterior ou n√£o. Este campo tem uma valor espec√≠fico 999 que √© usado para quando nunca ouve um pr√©vio contato com o cliente, e em outras vezes os valores representam dias passados desde o √∫ltimo contato. Ambos os artigos mostram como tratar de vari√°veis dummy para vari√°veis categ√≥ricas.
 
-Este artigo est· dividido da seguinte forma. A SeÁ„o II descreve como ser· abordado os problemas que queremos tratar, sobre as bibliografias utilizadas como referÍncia. A SeÁ„o III descreve a proposiÁ„o do trabalho, de como ser· tratado a an·lise dos dados e como medir o desempenho da campanha de promoÁ„o de vendas de depÛsitos banc·rios. A SeÁ„o IV ser· descrito os materiais e mÈtodos utilizados para aquisiÁ„o, formataÁ„o dos dados, criaÁ„o e teste do modelo. A SeÁ„o V mostrar· os resultados dos experimentos e uma breve discuss„o dos resultados da an·lise. A SeÁ„o VI descrever· as principais conclusıes do experimento.
+Este artigo est√° dividido da seguinte forma. A Se√ß√£o II descreve como ser√° abordado os problemas que queremos tratar, sobre as bibliografias utilizadas como refer√™ncia. A Se√ß√£o III descreve a proposi√ß√£o do trabalho, de como ser√° tratado a an√°lise dos dados e como medir o desempenho da campanha de promo√ß√£o de vendas de dep√≥sitos banc√°rios. A Se√ß√£o IV ser√° descrito os materiais e m√©todos utilizados para aquisi√ß√£o, formata√ß√£o dos dados, cria√ß√£o e teste do modelo. A Se√ß√£o V mostrar√° os resultados dos experimentos e uma breve discuss√£o dos resultados da an√°lise. A Se√ß√£o VI descrever√° as principais conclus√µes do experimento.
 
 \section{Abordagem do Problema}
 
-A abordagem do problema ser· por meio das fases do Machine Learning (ML approach), como descritos nas seguintes subseÁıes.
+A abordagem do problema ser√° por meio das fases do Machine Learning (ML approach), como descritos nas seguintes subse√ß√µes.
 
-\subsection{ExtraÁ„o dos Dados}
+\subsection{Extra√ß√£o dos Dados}
 
-Os dados ser„o extraÌdos da UCI \cite{UCI:2014}, onde o ds bank-additional-full.csv contÈm 90\% dos dados e ser· utilizado na fase de treinamento dos dados. O mesmo contÈm 41188 linhas e 20 colunas (features). E o ds bank-additional.csv contÈm 10\% dos dados, com 4199 linhas e 20 features ,e ser· utilizado para teste do modelo. H· outros dois ds, com menos dados, que n„o ser„o utilizados para este projeto. S„o o bank-full.csv e bank.csv.
+Os dados ser√£o extra√≠dos da UCI \cite{UCI:2014}, onde o ds bank-additional-full.csv cont√©m 90\% dos dados e ser√° utilizado na fase de treinamento dos dados. O mesmo cont√©m 41188 linhas e 20 colunas (features). E o ds bank-additional.csv cont√©m 10\% dos dados, com 4199 linhas e 20 features ,e ser√° utilizado para teste do modelo. H√° outros dois ds, com menos dados, que n√£o ser√£o utilizados para este projeto. S√£o o bank-full.csv e bank.csv.
 
-As vari·veis dos datasets (ds) extraÌdos da UCI \cite{UCI:2014} s„o as seguintes:
+As vari√°veis dos datasets (ds) extra√≠dos da UCI \cite{UCI:2014} s√£o as seguintes:
 
 \begin{itemize}
-	\item Dados banc·rios do cliente:
+	\item Dados banc√°rios do cliente:
 	
 	\begin{enumerate}
-		\item {\bf age:} idade (numÈrico)
-		\item {\bf job:} tipo de trabalho (categÛrico: 'admin.', 'blue-collar', 'entrepreneur','housemaid', 'management', 'retired', 'self-employed', 'services', 'student', 'technician', 'unemployed', 'unknown')
+		\item {\bf age:} idade (num√©rico)
+		\item {\bf job:} tipo de trabalho (categ√≥rico: 'admin.', 'blue-collar', 'entrepreneur','housemaid', 'management', 'retired', 'self-employed', 'services', 'student', 'technician', 'unemployed', 'unknown')
 
-		\item {\bf marital:} estado conjugal (categÛrico: 'divorced', 'married', 'single', 'unknown'. Nota: 'divorced' significa divorciado ou viuvez).
+		\item {\bf marital:} estado conjugal (categ√≥rico: 'divorced', 'married', 'single', 'unknown'. Nota: 'divorced' significa divorciado ou viuvez).
 
-		\item {\bf education:} educaÁ„o (categÛrico: 'basic.4y', 'basic.6y', 'basic.9y', 'high.school', 'illiterate', 'professional.course', 'university.degree', 'unknown')
+		\item {\bf education:} educa√ß√£o (categ√≥rico: 'basic.4y', 'basic.6y', 'basic.9y', 'high.school', 'illiterate', 'professional.course', 'university.degree', 'unknown')
 
-		\item {\bf default:} est· insolvente? (categÛrico: 'no','yes','unknown')
+		\item {\bf default:} est√° insolvente? (categ√≥rico: 'no','yes','unknown')
 
-		\item {\bf housing:} tem emprÈstimo de habitaÁ„o? (categÛrico: 'no','yes','unknown')
+		\item {\bf housing:} tem empr√©stimo de habita√ß√£o? (categ√≥rico: 'no','yes','unknown')
 
-		\item {\bf loan:} tem emprÈstimo pessoal? (categÛrico: 'no', 'yes', 'unknown') 
-relativo ao ˙ltimo contato da campanha corrente.
+		\item {\bf loan:} tem empr√©stimo pessoal? (categ√≥rico: 'no', 'yes', 'unknown') 
+relativo ao √∫ltimo contato da campanha corrente.
 
-	\item {\bf contact} tipo de contato realizado (categÛrico: 'cellular', 'telephone').
+	\item {\bf contact} tipo de contato realizado (categ√≥rico: 'cellular', 'telephone').
 
-		\item {\bf month:} mÍs do ano do ˙ltimo contato (categÛrico: 'jan', 'feb', 'mar', ..., 'nov', 'dec').
+		\item {\bf month:} m√™s do ano do √∫ltimo contato (categ√≥rico: 'jan', 'feb', 'mar', ..., 'nov', 'dec').
 
-		\item {\bf day\_of\_week:} dia da semana do ˙ltimo contato (categÛrico: 'mon', 'tue', 'wed', 'thu', 'fri').
+		\item {\bf day\_of\_week:} dia da semana do √∫ltimo contato (categ√≥rico: 'mon', 'tue', 'wed', 'thu', 'fri').
 
-		\item {\bf duration:} duraÁ„o do ˙ltimo contato em segundos (numeric). Nota importante. Este atributo afeta altamente a vari·vel dependente (e.g. se duration=0, ent„o y='no'). A vari·vel duration n„o È conhecida antes que a chamada seja concluÌda. TambÈm, apÛs o fim da chamada, "y" È obviamente conhecido. Dessa forma, esta vari·vel poderia ser somente incluÌda para propÛsito de benchmark e poderia ser descartado se a intenÁ„o fosse para aplicar num modelo de prediÁ„o realÌstico. 
+		\item {\bf duration:} dura√ß√£o do √∫ltimo contato em segundos (numeric). Nota importante. Este atributo afeta altamente a vari√°vel dependente (e.g. se duration=0, ent√£o y='no'). A vari√°vel duration n√£o √© conhecida antes que a chamada seja conclu√≠da. Tamb√©m, ap√≥s o fim da chamada, "y" √© obviamente conhecido. Dessa forma, esta vari√°vel poderia ser somente inclu√≠da para prop√≥sito de benchmark e poderia ser descartado se a inten√ß√£o fosse para aplicar num modelo de predi√ß√£o real√≠stico. 
 	\end{enumerate}
 
-	\item Atributos do contexto social e econÙmico:
+	\item Atributos do contexto social e econ√¥mico:
 
 	\begin{enumerate}
 		\setcounter{enumi}{12}
-		\item {\bf emp.var.rate}: indicador trimestral da taxa de variaÁ„o do emprego (numÈrico).
+		\item {\bf emp.var.rate}: indicador trimestral da taxa de varia√ß√£o do emprego (num√©rico).
 
-		\item {\bf cons.price.idx:} Ìndice de preÁo mensal de preÁo ao consumidor (numÈrico) - semelhante ao inpc/ipca do Brasil.
+		\item {\bf cons.price.idx:} √≠ndice de pre√ßo mensal de pre√ßo ao consumidor (num√©rico) - semelhante ao inpc/ipca do Brasil.
 
-		\item {\bf cons.conf.idx:} Ìndice de confianÁa do consumidor - indicador mensal (numÈrico) - semelhante ao ICC da FGV.
+		\item {\bf cons.conf.idx:} √≠ndice de confian√ßa do consumidor - indicador mensal (num√©rico) - semelhante ao ICC da FGV.
 
-		\item {\bf euribor3m:} Taxa euribor 3 meses - indicador di·rio (numÈrico).
+		\item {\bf euribor3m:} Taxa euribor 3 meses - indicador di√°rio (num√©rico).
 
-		\item {\bf nr.employed:} n˙mero de pessoas empregadas - indicator trimestral (numÈrico).
+		\item {\bf nr.employed:} n√∫mero de pessoas empregadas - indicator trimestral (num√©rico).
 	\end{enumerate}
 
 	\item Outros atributos:
 
 	\begin{enumerate}
 		\setcounter{enumi}{17}
-		\item {\bf campaign:} n˙mero de contatos realizados durante a campanha e para este cliente (numÈrico, inclui o ˙ltimo contato).
+		\item {\bf campaign:} n√∫mero de contatos realizados durante a campanha e para este cliente (num√©rico, inclui o √∫ltimo contato).
 
-		\item {\bf pdays:} n˙mero de dias que se passaram apÛs o ˙ltimo contato com o cliente desde a ˙ltima campanha (numÈrico; 999 significa que o cliente n„o foi previamente contactado).
+		\item {\bf pdays:} n√∫mero de dias que se passaram ap√≥s o √∫ltimo contato com o cliente desde a √∫ltima campanha (num√©rico; 999 significa que o cliente n√£o foi previamente contactado).
 
-		\item {\bf previous:} n˙mero de contatos realizados antes desta campanha e para este cliente (numÈrico).
+		\item {\bf previous:} n√∫mero de contatos realizados antes desta campanha e para este cliente (num√©rico).
 
-		\item {\bf poutcome:} resultado da campanha de marketing prÈvia (categÛrica: 'failure', 'nonexistent', 'success')
+		\item {\bf poutcome:} resultado da campanha de marketing pr√©via (categ√≥rica: 'failure', 'nonexistent', 'success')
 	\end{enumerate} 
 
-	\item Vari·vel dependente (saÌda do modelo/objetivo desejado):
+	\item Vari√°vel dependente (sa√≠da do modelo/objetivo desejado):
 
 	\begin{enumerate}
 		\setcounter{enumi}{20}
-		\item {\bf y:} o cliente se subscreveu ao plano de depÛsito a termo (bin·rio: 'yes', 'no').
+		\item {\bf y:} o cliente se subscreveu ao plano de dep√≥sito a termo (bin√°rio: 'yes', 'no').
 	\end{enumerate}
 \end{itemize}
 
-\subsection{PreparaÁ„o dos Dados}
-O notebook Project3.ipynb \footnote{https://github.com/edbkei/MO416PROJ3/tree/master/Projeto3} d· mais detalhes de como foi realizado a preparaÁ„o dos dados. 
+\subsection{Prepara√ß√£o dos Dados}
+O notebook Project3.ipynb \footnote{https://github.com/edbkei/MO416PROJ3/tree/master/Projeto3} d√° mais detalhes de como foi realizado a prepara√ß√£o dos dados. 
 
-A vari·vel dependente y foi transformado em dados bin·rios, em vez dos dados categÛricos yes e no. Bem como feito tambÈm na vari·vel independente contact, onde o cellular ficou 0, e o telephone ficou 1.
+A vari√°vel dependente y foi transformado em dados bin√°rios, em vez dos dados categ√≥ricos yes e no. Bem como feito tamb√©m na vari√°vel independente contact, onde o cellular ficou 0, e o telephone ficou 1.
 
-Foi criado uma nova vari·vel independente pdays\_no\_contact derivado do pdays, de forma que o valor 999 ficou com o valor 1 (n„o houve contato) e 0 (houve contato), seguindo orientaÁ„o do Nelson Chris \cite{Medium:2019}. 
+Foi criado uma nova vari√°vel independente pdays\_no\_contact derivado do pdays, de forma que o valor 999 ficou com o valor 1 (n√£o houve contato) e 0 (houve contato), seguindo orienta√ß√£o do Nelson Chris \cite{Medium:2019}. 
 
-Foi verificado inicialmente que houve 11.26\% de subscriÁ„o e 88.72\% de n„o subscriÁ„o no ds de treinamento. Se utilizado o ds de treinamento sem balanceamento, haveria o risco de o modelo fazer prediÁ„o com maior n˙mero de FP. Seguindo a recomendaÁ„o da Susan Li \cite{TowardsDataScience:2017} , o dataset de treinamento foi balanceado utilizando o algoritmo SMOTE (Synthetic Minority Oversampling Tecnique).
+Foi verificado inicialmente que houve 11.26\% de subscri√ß√£o e 88.72\% de n√£o subscri√ß√£o no ds de treinamento. Se utilizado o ds de treinamento sem balanceamento, haveria o risco de o modelo fazer predi√ß√£o com maior n√∫mero de FP. Seguindo a recomenda√ß√£o da Susan Li \cite{TowardsDataScience:2017} , o dataset de treinamento foi balanceado utilizando o algoritmo SMOTE (Synthetic Minority Oversampling Tecnique).
 
-As vari·veis categÛricas job, marital, education, default, housing, loan, month, day\_of\_week, poutcome foram transformadas em vari·veis dummy, cujos valores viraram bin·rios por meio da rotina get\_dummies da mÛdulo pandas. Assim como exemplo, a vari·vel categÛrica marital, que tem valores married, single, unknown, viraram novas vari·veis bin·rias marital\_married, marital\_single, marital\_married. Tanto Nelson Chris como Susan Li utilizaram a tÈcnica de criaÁ„o de vari·veis dummy para vari·veis categÛricas.
+As vari√°veis categ√≥ricas job, marital, education, default, housing, loan, month, day\_of\_week, poutcome foram transformadas em vari√°veis dummy, cujos valores viraram bin√°rios por meio da rotina get\_dummies da m√≥dulo pandas. Assim como exemplo, a vari√°vel categ√≥rica marital, que tem valores married, single, unknown, viraram novas vari√°veis bin√°rias marital\_married, marital\_single, marital\_married. Tanto Nelson Chris como Susan Li utilizaram a t√©cnica de cria√ß√£o de vari√°veis dummy para vari√°veis categ√≥ricas.
 
-Fizemos a separaÁ„o do ds de treinamento em ds da vari·vel independente ("y") e vari·veis independentes ("X") por meio do atributo loc do mÛdulo pandas.
+Fizemos a separa√ß√£o do ds de treinamento em ds da vari√°vel independente ("y") e vari√°veis independentes ("X") por meio do atributo loc do m√≥dulo pandas.
 
-Realizamos tambÈm a normalizaÁ„o do ds das vari·veis independentes ("X") por meio do algoritmo StandardScaler do mÛdulo sklearn.
+Realizamos tamb√©m a normaliza√ß√£o do ds das vari√°veis independentes ("X") por meio do algoritmo StandardScaler do m√≥dulo sklearn.
 
-\subsection{SeleÁ„o das Features}
+\subsection{Sele√ß√£o das Features}
 
-Com a utilizaÁ„o do get\_dummies, o n˙mero de vari·veis aumentou de 20 para 54 vari·veis independentes. Assim, Susan Li \cite{TowardsDataScience:2017} utilizou a tÈcnica RFE (Recursive Feature Elimination) para reduzir a quantidade de features, basicamente lista-se as vari·veis independente com os seus pValue por meio do aplicativo summary2 do mÛdulo Logit. Aquelas features que tiveram o pValue maiores que 5\% seriam retirados manual da amostra. Durante o treinamento e no cross-validation (CRV), tiveram Ûtimo desempenho, com accuracy maior que 90\%. PorÈm na utilizaÁ„o do modelo de Regress„o LogÌstica na amostra de teste, o resultado foi pÌfio. Houve aumento significativo de False Positive (FP), apenas 1 caso de True Positive (TP). Resolvemos fazer como Nelson Chris \cite{Medium:2019}, i.e. manter todas as 54 vari·veis independentes.
+Com a utiliza√ß√£o do get\_dummies, o n√∫mero de vari√°veis aumentou de 20 para 54 vari√°veis independentes. Assim, Susan Li \cite{TowardsDataScience:2017} utilizou a t√©cnica RFE (Recursive Feature Elimination) para reduzir a quantidade de features, basicamente lista-se as vari√°veis independente com os seus pValue por meio do aplicativo summary2 do m√≥dulo Logit. Aquelas features que tiveram o pValue maiores que 5\% seriam retirados manual da amostra. Durante o treinamento e no cross-validation (CRV), tiveram √≥timo desempenho, com accuracy maior que 90\%. Por√©m na utiliza√ß√£o do modelo de Regress√£o Log√≠stica na amostra de teste, o resultado foi p√≠fio. Houve aumento significativo de False Positive (FP), apenas 1 caso de True Positive (TP). Resolvemos fazer como Nelson Chris \cite{Medium:2019}, i.e. manter todas as 54 vari√°veis independentes.
 
 \subsection{Treinamento dos Dados}
 
-Se precisar, vocÍ pode usar listas, tais como
+Os dados de treinamento foram treinado com o algoritmo LogisticRegression do m√≥dulo sklearn.linear\_model. O modelo foi obtido a partir da fun√ß√£o fit (fitness) entre os dados de treinamento balanceados e normalizados de X e y.
 
 
-\subsection{ValidaÁ„o do Modelo}
+\subsection{Valida√ß√£o do Modelo}
 
-Se precisar, vocÍ pode usar listas, tais como
+O modelo obtido a partir da amostra de de treinamento foi tamb√©m aplicado tanto para a amostra de treinamento como para a amostra de verifica√ß√£o e medidos pela fun√ß√£o score para obten√ß√£o do accuracy (acur√°cia) do modelo.
+
+Foi tamb√©m gerado uma matriz de confus√£o entre o y real e o y previsto, este foi obtido da fun√ß√£o predict √† amostra X.
+
+A matriz de confus√£o mostra uma matriz de 2 x 2, onde est√£o registrados o n√∫mero de Falsos Positivos (FP), Falsos Negativos (FN), Verdadeiros Positivos (TP) e Verdadeiros Negativos (TN). Respostas verdadeiras s√£o TP+TN, respostas falsas s√£o FP+FN.
 
 \subsection{Teste do Modelo}
 
-Se precisar, vocÍ pode usar listas, tais como
+Aqui a amostra de teste √© submetida ao mesmo modelo obtido na fase de treinamento e validada no teste de CRV (Cross-Validation). Ser√° o obtido a matriz de confus√£o, medido o accuracy, precision, F1-score, AUC e tamb√©m ser√° gerado o gr√°fico ROC.
+
+Ser√° verificado o n√∫mero de respostas falsas e tamb√©m ser√° analisado os componentes principais que afetaram na decis√£o do y=1 (aceita√ß√£o da subscri√ß√£o).
 
 \section{Trabalho Proposto}
+O trabalho proposto ser√° a busca do modelo de predi√ß√£o de subscri√ß√£o ao dep√≥sito banc√°rio por meio do processo explicado no modelo da Figura \ref{strategy}. Basicamente, essa busca ocorrer√° de forma interativa tratando o dataset da UCI \cite{UCI:2014}. A aceita√ß√£o do modelo no CRV e no teste de modelo ser√° por meio dos valores das m√©tricas. Espera-se um desempenho superior a 90\% nas m√©tricas de precision, AUC, F1.
 
-Nesta seÁ„o descreva de forma abrangente, porÈm clara e organizada, o seu trabalho.
+\begin{figure}[htbp]
+	\centerline{\includegraphics[scale=0.30]{figuras/strategy.jpg}}
+	\caption{Estrat√©gia de Treinamento, Cross-validation e Teste.}
+	\label{strategy}
+\end{figure}
+
 
 \subsection{Tabelas}
+Aqui a amostra de teste √© submetida ao mesmo modelo obtido na fase de treinamento e validada no teste de CRV (Cross-Validation). Ser√° o obtido a matriz de confus√£o, medido o accuracy, precision, F1-score, AUC e tamb√©m ser√° gerado o gr√°fico ROC.
 
-Uma tabela pode ser posicionada em qualquer lugar no texto, como no exemplo
-seguinte.
+Ser√° verificado o n√∫mero de respostas falsas e tamb√©m ser√° analisado os componentes principais que afetaram na decis√£o do y=1 (aceita√ß√£o da subscri√ß√£o).
+A tabela \ref{tab:desempenho} cont√©m os valores das m√©tricas obtidas durante o CRV e teste do modelo.
 %
-\begin{table}[ht]
-\renewcommand{\arraystretch}{1.3}
-\centering
- \caption{Exemplo de texto de uma tabela.}
- \label{tab:tab1}
- \begin{tabular}{lcccc}\hline
-  & \multicolumn{2}{c}{Texto}
-  & \multicolumn{2}{c}{Sem \#21} \\ \cline{2-5}
-  X & Y & $z$ & $\mathcal{A}$ & valor-$z$ \\ \hline \hline
-  1      &0,491  & 3,66   &0,367 &2,46  \\
-  2    &0,732  & 4,21   &0,354 &1,50  \\
-  3      &0,000  & -      &0,000 & -    \\
-  4      &0,000  & -      &0,000 & -  \\
-  5      &0,421  & 1,94   &0,668 &2,79  \\
-  6      &0,421  & 1,94   &0,668 &2,79  \\
-  7      &0,938  & 3,92   &1,295 &4,67 \\
-  8       &0,000  & -      &0,000 & - \\
-  9       &0,356  & 1,40   &0,491 &1,87 \\ \hline
- \end{tabular}
+\begin{center}
+	\begin{table}[!ht]
+		\caption{Tabela de Desempenho.}\label{tab:desempenho}
+		\resizebox{}\textwidth}{!}{%}
+		\centering    %% not "\center{...}"
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline
+			Modelo&Amostra&Score&AUC&Accuracy&Precision&F1-score\\     %% no "&" at start of row
+			\hline
+			LR(CRV)&70/30&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			LR(Teste)&70/30&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+	\end{tabular}}
 \end{table}
+\end{center}
 
-Para citar esta tabela, em qualquer ponto no texto, como Tabela~\ref{tab:tab1}.
 
+\section{Materiais e M√©todos}
 
-\section{Materiais e MÈtodos}
-
-Todo trabalho deve ser submetido a algum tipo de teste para que possa ser avaliado. Na verdade, buscamos aqui uma validaÁ„o com um car·ter mais cientÌfico de seu trabalho (validaÁ„o de hipÛtese). Busca-se identificar quais os seus pontos fortes e fracos. Nesta seÁ„o vocÍ deve descrever claramente quais foram e como foram conduzidos os testes, quais os materiais e as metodologias empregadas.   
+Todo trabalho deve ser submetido a algum tipo de teste para que possa ser avaliado. Na verdade, buscamos aqui uma valida√ß√£o com um car√°ter mais cient√≠fico de seu trabalho (valida√ß√£o de hip√≥tese). Busca-se identificar quais os seus pontos fortes e fracos. Nesta se√ß√£o voc√™ deve descrever claramente quais foram e como foram conduzidos os testes, quais os materiais e as metodologias empregadas.   
 
 Uma figura pode ser posicionada em qualquer lugar no texto, como no exemplo seguinte da Figura~\ref{fig:fig1}.
 
 Use o comando ``cite'' para citar itens na sua lista de
-referÍncias atravÈs dos seus rÛtulos. Exemplo: \cite{Moro:2014}\cite{UCI:2014}.
+refer√™ncias atrav√©s dos seus r√≥tulos. Exemplo: \cite{Moro:2014}\cite{UCI:2014}.
 
 
-\section{Resultados e Discuss„o}
+\section{Resultados e Discuss√£o}
 
-Nesta seÁ„o vocÍ deve apresentar claramente os resultados obtidos para os testes efetuados. Procure organizar os dados utilizando uma linguagem cientÌfica. Algumas opÁıes s„o o uso de tabelas e gr·ficos, para que a compreens„o seja f·cil e r·pida. 
+Nesta se√ß√£o voc√™ deve apresentar claramente os resultados obtidos para os testes efetuados. Procure organizar os dados utilizando uma linguagem cient√≠fica. Algumas op√ß√µes s√£o o uso de tabelas e gr√°ficos, para que a compreens√£o seja f√°cil e r√°pida. 
 
-\section{Conclusıes}
+\section{Conclus√µes}
 
-Nesta seÁ„o, faÁa uma an·lise geral de seu trabalho, levando em conta todo o processo de desenvolvimento e os resultados. Quais os seus pontos fortes? Quais os seus pontos fracos? Quais aspectos de sua metodologia de trabalho foram positivas? Quais foram negativas? O que vocÍ recomendaria (ou n„o recomendaria) a outras pessoas que estejam realizando trabalhos similares aos seus? 
+Nesta se√ß√£o, fa√ßa uma an√°lise geral de seu trabalho, levando em conta todo o processo de desenvolvimento e os resultados. Quais os seus pontos fortes? Quais os seus pontos fracos? Quais aspectos de sua metodologia de trabalho foram positivas? Quais foram negativas? O que voc√™ recomendaria (ou n√£o recomendaria) a outras pessoas que estejam realizando trabalhos similares aos seus? 
 
-A campanha de promoÁ„o de vendas de depÛsito banc·rio ‡ prazo, por meio de telemarketing, obteve subscriÁ„o de apenas 11 \% dos potenciais clientes abordados. Possivelmente, devido ao fato que a abordagem para determinadas classes ou condiÁıes sociais econÙmicas sejam impeditivas ou n„o entenderem o tipo de investimento que lhes s„o propostos. DepÛsito banc·rio ‡ prazo pode ser interessante se os juros pagos no resgate forem tambÈm interessantes. O euribor3m È a È taxa interbanc·ria contra a qual um grupo representativo de bancos europeus contrai emprÈstimos mutuamente cuja duraÁ„o È de 3 meses, muito similar o CDB do Brasil, o ajuste de juros de emprÈstimos, conta poupanÁa, hipoteca, etc seguem essa taxa. O nosso modelo indicou o eurobor3m como feature importante, como esperado que fosse. Algumas pessoas veem valor com esse tipo de transaÁ„o banc·ria, pois pode emprestar o dinheiro por um tempo para o banco em troca de juros, como È o caso de aposentados (job\_retired) e estudantes (job\_student), pois tem nÌvel universit·rio (education\_university.degree) e portanto È de se esperar que entendam o mecanismo da aplicaÁ„o financeira. O clima econÙmico parece favorecer potenciais clientes para aquisiÁ„o da aplicaÁ„o como indica a mÈdia trimestral do n˙mero total de cidad„os empregados (nr.employed) e a taxa de variaÁ„o de empregabilidade trimestral (emp.var.rate). A enquete durante a campanha mostra que potenciais clientes escondem se os mesmos tem algum problema com dÈbitos pendentes (default\_unknown). Contato por meio de telefone ou celular (contact), ou mais de um contato (campaign), com o cliente, tambÈm se j· houve um contato prÈvio bem sucedido (poutcome\_success) ou n„o existente (poutcome\_nonexistent), com uma certa duraÁ„o (duration), parecem influir na aquisiÁ„o do plano do depÛsito ‡ prazo. Alguns meses no ano tiveram melhor aceitaÁ„o da campanha como marÁo, maio, julho, agosto, setembro, novembro e dezembro. O melhor dia da semana para abordar clientes foi quarta-feira.
+A campanha de promo√ß√£o de vendas de dep√≥sito banc√°rio √† prazo, por meio de telemarketing, obteve subscri√ß√£o de apenas 11 \% dos potenciais clientes abordados. Possivelmente, devido ao fato que a abordagem para determinadas classes ou condi√ß√µes sociais econ√¥micas sejam impeditivas ou n√£o entenderem o tipo de investimento que lhes s√£o propostos. Dep√≥sito banc√°rio √† prazo pode ser interessante se os juros pagos no resgate forem tamb√©m interessantes. O euribor3m √© a √© taxa interbanc√°ria contra a qual um grupo representativo de bancos europeus contrai empr√©stimos mutuamente cuja dura√ß√£o √© de 3 meses, muito similar o CDB do Brasil, o ajuste de juros de empr√©stimos, conta poupan√ßa, hipoteca, etc seguem essa taxa. O nosso modelo indicou o eurobor3m como feature importante, como esperado que fosse. Algumas pessoas veem valor com esse tipo de transa√ß√£o banc√°ria, pois pode emprestar o dinheiro por um tempo para o banco em troca de juros, como √© o caso de aposentados (job\_retired) e estudantes (job\_student), pois tem n√≠vel universit√°rio (education\_university.degree) e portanto √© de se esperar que entendam o mecanismo da aplica√ß√£o financeira. O clima econ√¥mico parece favorecer potenciais clientes para aquisi√ß√£o da aplica√ß√£o como indica a m√©dia trimestral do n√∫mero total de cidad√£os empregados (nr.employed) e a taxa de varia√ß√£o de empregabilidade trimestral (emp.var.rate). A enquete durante a campanha mostra que potenciais clientes escondem se os mesmos tem algum problema com d√©bitos pendentes (default\_unknown). Contato por meio de telefone ou celular (contact), ou mais de um contato (campaign), com o cliente, tamb√©m se j√° houve um contato pr√©vio bem sucedido (poutcome\_success) ou n√£o existente (poutcome\_nonexistent), com uma certa dura√ß√£o (duration), parecem influir na aquisi√ß√£o do plano do dep√≥sito √† prazo. Alguns meses no ano tiveram melhor aceita√ß√£o da campanha como mar√ßo, maio, julho, agosto, setembro, novembro e dezembro. O melhor dia da semana para abordar clientes foi quarta-feira.
 
 %******************************************************************************
-% ReferÍncias - Definidas no arquivo Relatorio.bib
+% Refer√™ncias - Definidas no arquivo Relatorio.bib
  +-------------+
 
 \bibliographystyle{IEEEtran}
@@ -270,7 +277,7 @@ A campanha de promoÁ„o de vendas de depÛsito banc·rio ‡ prazo, por meio de telem
 
 \vspace{20ex}
 
-\section*{\Large \textbf{Submiss„o}}
+\section*{\Large \textbf{Submiss√£o}}
 
 Seu trabalho deve ser submetido via Google ClassRoom.
 
