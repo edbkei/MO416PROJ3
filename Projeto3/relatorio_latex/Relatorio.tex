@@ -193,16 +193,20 @@ Com a utilização do get\_dummies, o número de variáveis aumentou de 20 para 54 v
 
 \subsection{Treinamento dos Dados}
 
-Se precisar, você pode usar listas, tais como
+Os dados de treinamento foram treinado com o algoritmo LogisticRegression do módulo sklearn.linear\_model. O modelo foi obtido a partir da função fit (fitness) entre os dados de treinamento balanceados e normalizados de X e y.
 
 
-\subsection{Validação do Modelo}
+\subsection{Validação do Modelo (Cross Validation-CRV)}
 
-Se precisar, você pode usar listas, tais como
+O modelo obtido a partir da amostra de de treinamento foi também aplicado tanto para a amostra de treinamento como para a amostra de verificação e medidos pela função score para obtenção do accuracy (acurácia) do modelo.
+
+Foi também gerado uma matriz de confusão entre o y real e o y previsto, este foi obtido da função predict à amostra X.
+
+A matriz de confusão mostra uma matriz de 2 x 2, onde estão registrados o número de Falsos Positivos (FP), Falsos Negativos (FN), Verdadeiros Positivos (TP) e Verdadeiros Negativos (TN). Respostas verdadeiras são TP+TN, respostas falsas são FP+FN.
+
 
 \subsection{Teste do Modelo}
-
-Se precisar, você pode usar listas, tais como
+Similar à metodologia aplicado ao CRV, mas aplicado à amostra de teste.
 
 \section{Trabalho Proposto}
 
@@ -211,7 +215,7 @@ O trabalho proposto será a busca do modelo de predição de subscrição ao depósito
 \begin{figure}[htbp]
 	\centerline{\includegraphics[scale=0.30]{figuras/strategy.jpg}}
 	\caption{Estratégia de Treinamento, Cross-validation e Teste.}
-	\label{fig:strategy}
+	\label{strategy}
 \end{figure}
 
 
