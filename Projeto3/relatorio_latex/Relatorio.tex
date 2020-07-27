@@ -245,12 +245,13 @@ A tabela \ref{tab:desempenho} contém os valores das métricas obtidas durante o C
 
 \section{Materiais e Métodos}
 
-Todo trabalho deve ser submetido a algum tipo de teste para que possa ser avaliado. Na verdade, buscamos aqui uma validação com um caráter mais científico de seu trabalho (validação de hipótese). Busca-se identificar quais os seus pontos fortes e fracos. Nesta seção você deve descrever claramente quais foram e como foram conduzidos os testes, quais os materiais e as metodologias empregadas.   
+"Todo trabalho deve ser submetido a algum tipo de teste para que possa ser avaliado. Na verdade, buscamos aqui uma validação com um caráter mais científico de seu trabalho (validação de hipótese). Busca-se identificar quais os seus pontos fortes e fracos. Nesta seção você deve descrever claramente quais foram e como foram conduzidos os testes, quais os materiais e as metodologias empregadas."  - Remover esse parágrafo depois.
 
-Uma figura pode ser posicionada em qualquer lugar no texto, como no exemplo seguinte da Figura~\ref{fig:fig1}.
+Aqui avaliamos a eficiência de nossa metodologia, dado na Figura \ref{strategy}, para predição de subscrição de depósito bancário a termo. Inicialmente, extraímos o dataset da UCI \cite{UCI:2014}, no entanto não foi possível garantir que os dados tivessem a mesma distribuíção, pois foram registrados de forma cronológica, critérios de sazonalidade não foram considerados, nem houve nenhuma planejamento amostral, apenas a utilização do dataset da forma pública que está disponibilizada. Não está explícito no trabalho de Moro et al. \cite{Moro:2014}, se houve algum critério para a escolha das variáveis independentes. Precisamos criar uma nova variável pdays\_no\_contact, como realizado por Nelson Chris \cite{Medium:2019}, pois era uma forma de representar o valor 999, que se referia a nenhum contato. Mesmo assim, a amostra pode conter algum viés estatístico pela inclusão de atributos do contexto sócio-econômico, cuja variação é por vezes trimestral (emp.var.rate e nr.employed), mensal (cons.price.idx e cons.conf.idx) e diário (euribor3m). Isso pode resultar em variáveis com pValue alto, ou seja pouco significativo.
 
-Use o comando ``cite'' para citar itens na sua lista de
-referências através dos seus rótulos. Exemplo: \cite{Moro:2014}\cite{UCI:2014}.
+Isto pode ser comprovado com a análise de componentes principais, que corroborou que esses variáveis x, y, z, ...., não foram significativas para o modelo. "Atualizar ...."
+
+Utilizamos também a técnica SMOTE, como recomendado por Susan Li \cite{TowardsDataScience:2017}, para balancear casos com respostas positivas (yes) com as negativas (no) e dessa forma, mitigar as predições com respostas falsas, aquelas referidas como Falsos Positivos ou Falsos Negativos.
 
 
 \section{Resultados e Discussão}
