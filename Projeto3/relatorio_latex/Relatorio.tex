@@ -206,35 +206,37 @@ Se precisar, você pode usar listas, tais como
 
 \section{Trabalho Proposto}
 
-Nesta seção descreva de forma abrangente, porém clara e organizada, o seu trabalho.
+O trabalho proposto será a busca do modelo de predição de subscrição ao depósito bancário por meio do processo explicado no modelo da Figura \ref{strategy}. Basicamente, essa busca ocorrerá de forma interativa tratando o dataset da UCI \cite{UCI:2014}. A aceitação do modelo no CRV e no teste de modelo será por meio dos valores das métricas. Espera-se um desempenho superior a 90\% nas métricas de precision, AUC, F1.
+
+\begin{figure}[htbp]
+	\centerline{\includegraphics[scale=0.30]{figuras/strategy.jpg}}
+	\caption{Estratégia de Treinamento, Cross-validation e Teste.}
+	\label{fig:strategy}
+\end{figure}
+
 
 \subsection{Tabelas}
+Aqui a amostra de teste é submetida ao mesmo modelo obtido na fase de treinamento e validada no teste de CRV (Cross-Validation). Será o obtido a matriz de confusão, medido o accuracy, precision, F1-score, AUC e também será gerado o gráfico ROC.
 
-Uma tabela pode ser posicionada em qualquer lugar no texto, como no exemplo
-seguinte.
+Será verificado o número de respostas falsas e também será analisado os componentes principais que afetaram na decisão do y=1 (aceitação da subscrição).
+A tabela \ref{tab:desempenho} contém os valores das métricas obtidas durante o CRV e teste do modelo.
 %
-\begin{table}[ht]
-\renewcommand{\arraystretch}{1.3}
-\centering
- \caption{Exemplo de texto de uma tabela.}
- \label{tab:tab1}
- \begin{tabular}{lcccc}\hline
-  & \multicolumn{2}{c}{Texto}
-  & \multicolumn{2}{c}{Sem \#21} \\ \cline{2-5}
-  X & Y & $z$ & $\mathcal{A}$ & valor-$z$ \\ \hline \hline
-  1      &0,491  & 3,66   &0,367 &2,46  \\
-  2    &0,732  & 4,21   &0,354 &1,50  \\
-  3      &0,000  & -      &0,000 & -    \\
-  4      &0,000  & -      &0,000 & -  \\
-  5      &0,421  & 1,94   &0,668 &2,79  \\
-  6      &0,421  & 1,94   &0,668 &2,79  \\
-  7      &0,938  & 3,92   &1,295 &4,67 \\
-  8       &0,000  & -      &0,000 & - \\
-  9       &0,356  & 1,40   &0,491 &1,87 \\ \hline
- \end{tabular}
+\begin{center}
+	\begin{table}[!ht]
+		\caption{Tabela de Desempenho.}\label{tab:desempenho}
+		\resizebox{}\textwidth}{!}{%}
+		\centering    %% not "\center{...}"
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline
+			Modelo&Amostra&Score&AUC&Accuracy&Precision&F1-score\\     %% no "&" at start of row
+			\hline
+			LR(CRV)&70/30&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			LR(Teste)&70/30&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+	\end{tabular}}
 \end{table}
-
-Para citar esta tabela, em qualquer ponto no texto, como Tabela~\ref{tab:tab1}.
+\end{center}
 
 
 \section{Materiais e Métodos}
