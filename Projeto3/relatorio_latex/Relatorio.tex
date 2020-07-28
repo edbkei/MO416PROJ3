@@ -222,21 +222,21 @@ O trabalho proposto será a busca do modelo de predição de subscrição ao depósito
 \subsection{Tabelas}
 Aqui a amostra de teste é submetida ao mesmo modelo obtido na fase de treinamento e validada no teste de CRV (Cross-Validation). Será o obtido a matriz de confusão, medido o accuracy, precision, F1-score, AUC e também será gerado o gráfico ROC.
 
-Será verificado o número de respostas falsas e também será analisado os componentes principais que afetaram na decisão do y=1 (aceitação da subscrição).
+Será verificado o número de respostas falsas e também será analisado os componentes principais que afetaram na decisão do y==1 (aceitação da subscrição).
 A tabela \ref{tab:desempenho} contém os valores das métricas obtidas durante o CRV e teste do modelo.
 %
 \begin{center}
 	\begin{table}[!ht]
 		\caption{Tabela de Desempenho.}\label{tab:desempenho}
-		\resizebox{}\textwidth}{!}{%}
+		\resizebox{}\columnwidth}{!}{%}
 		\centering    %% not "\center{...}"
-		\begin{tabular}{|c|c|c|c|c|c|c|}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|}
 			\hline
-			Modelo&Amostra&Score&AUC&Accuracy&Precision&F1-score\\     %% no "&" at start of row
+			Modelo&Amostra&Score&AUC&Accuracy&Precision&Recall&F1\\     %% no "&" at start of row
 			\hline
-			LR(CRV)&70/30&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
+			LR(CRV)&90\%&0.93&0.89&0.94&0.94&0.94&0.94\\     %% no "&" at start of row
 			\hline        %% extra \hline at bottom of table
-			LR(Teste)&70/30&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
+			LR(Teste)&10\%&0.94&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
 			\hline        %% extra \hline at bottom of table
 	\end{tabular}}
 \end{table}
@@ -256,7 +256,7 @@ Utilizamos também a técnica SMOTE, como recomendado por Susan Li \cite{TowardsDa
 
 \section{Resultados e Discussão}
 
-Nesta seção você deve apresentar claramente os resultados obtidos para os testes efetuados. Procure organizar os dados utilizando uma linguagem científica. Algumas opções são o uso de tabelas e gráficos, para que a compreensão seja fácil e rápida. 
+"Nesta seção você deve apresentar claramente os resultados obtidos para os testes efetuados. Procure organizar os dados utilizando uma linguagem científica. Algumas opções são o uso de tabelas e gráficos, para que a compreensão seja fácil e rápida. " - remover depois.
 
 \section{Conclusões}
 
