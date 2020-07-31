@@ -36,7 +36,7 @@
 
 \urlstyle{tt}
 % Indicar o nome do autor e o curso/nível (grad-mestrado-doutorado-especial)
-\title{Previsão do sucesso de chamadas de telemarketing sobre vendas de depósito bancário a longo prazo}
+\title{Avaliação da Campanha de telemarketing sobre vendas de plano de depósito bancário a termo}
 \author{%
  \IEEEauthorblockN{E. S. Ito\,\IEEEauthorrefmark{1}}
  \IEEEauthorblockA{\IEEEauthorrefmark{1}%
@@ -56,7 +56,10 @@
 %%*****************************************************************************
 % Resumo do trabalho
 \begin{abstract}
-Aqui avaliamos a eficiência da promoção de vendas de depósitos bancários a longo prazo para um banco português por meio de chamadas de telemarketing. Os dados utilizados foram doados e agora publicamente disponíveis para pesquisa no sítio UCI Machine Learning Repository \cite{UCI:2014}. Os dados possuem 20 variáveis (features) que potencialmente poderiam influenciar a subscrição do cliente ao programa de depósito bancário. Os mesmos serão utilizados submetidos às fases da abordagem do aprendizado de máquina: extração dos dados, preparação dos dados, seleção de features, treinamento dos dados utilizando Regressão Logística. Esses 3 modelos foram treinados com uma amostra com 90\% dos dados e treinado com uma amostra de teste com 10\% dos dados, disponibilizados pela UCI. A acurácia para os 3 modelos foram de 85\% (???). Apenas 7\% (foram influenciados pela promoção (???)
+Avaliamos a eficiência do modelo de predição de promoção de vendas de depósitos bancários a termo (depósito à prazo em troca de pagamento de juros) para um banco português por meio de telemarketing e também tentamos traçar o perfil de clientes que aceitam esse tipo de plano, se há alguma influência devido à atributos (features) próprios, algum contexto sócio-econômico, ou a forma de abordagem do operador de telemarketing ao cliente. Diferente do estudo realizado por Moro et Al. \cite{Moro:2014} cujo estudo foi mais para satisfazer o banco com
+informações detalhadas da campanha para assim customizar futuros investimentos na área de marketing, enquanto que o nosso objetivo é puramente acadêmico, onde iremos aplicar conceitos que melhoram a qualidade da informação dos dados, por meio de preparação de dados, onde realizamos o balanceamento do dataset de treinamento e teste por meio da técnica SMOTE, 
+criação de novas features através de variáveis dummy e a normalização dos dados para assim treinar o modelo, no nosso caso o Logistic Regression. Essa metodologia foi fundamental para obter métricas superiores aos casos da referência. Obtivemos métricas (accuracy, recall, f1-score) com valores superiores a 94\% enquanto que Moro et Al. \cite{Moro:2014} obtiveram 90\%,
+Nelson Chris \cite{Medium:2019} com 91\% e Susan Li \cite{TowardsDataScience:2017} com 74\% utilizando o mesmo dataset. Diferente dos casos da referência, adicionamos uma atividade extra para realizar análise qualitativa, por meio de estatística básica das features (média, desvio padrão, t-test, quantificação básica) e também com o uso RFE (Recursive Feature Elimination) não para eliminar features, mas para priorizá-las, e assim finalmente poder traçar os perfis dos clientes que aceitam a subscrição do plano de depósito a termo. A eficiência dessa metodologia pode ser comprovada com a melhor qualidade nas métricas e um melhor conhecimento das features.
 \end{abstract}
 
 % Indique três palavras-chave que descrevem o trabalho
@@ -68,8 +71,17 @@ Aqui avaliamos a eficiência da promoção de vendas de depósitos bancários a longo
 % Modifique as seções de acordo com o seu projeto
 
 \section{Introdução}
+A escolha do tema avaliação da campanha de vendas de depósitos bancários a termo foi baseado no artigo de Moro et al \cite{Moro:2014} e da disponibilidade dos dados no Repositório de Dados de Machine Learning da UCI \cite{UCI:2014}. O artigo refere-se à campanha de um banco português para obter mais clientes para um produto oferecido sobre depósitos bancários a termo, uma espécie de CDB do Brasil, cuja taxa de juro compete com o euribor3m, que é uma taxa interbancária entre bancos da União Européia, com duração de 3 meses. A campanha foi realizada por meio de chamadas telefônicas ao telefone fixo residencial ou ao celular do potencial cliente. Uma abordagem ao cliente é realizada com uma certa duração onde são explicado o produto de venda em questão e anotados uma série de dados do perfil do cliente e também do momento sócio econômico. Alguns aceitam a subscrição bancária em troca do pagamento do juros após 3 meses e outros simplesmente não aceitam. 
 
-Regressão Logística em Machine Learning é uma técnica de aprendizado supervisionado que consiste na regressão de um modelo matemático que relaciona variáveis de entrada $X{_i} (i=1,2,...,n)$ a diferentes grupos de classificação. Para isso, é usada a função \textit{Sigmoid} para determinar a probabilidade de um determinado conjunto de variáveis a pertencerem a determinado grupo:
+Assim o banco quiz saber o que influencia o cliente na subscrição ao produto de venda em questão, se há possibilidade de predição de subscrição ao produto e quais dados dos perfis dos cliente ou quais dados do momento sócio econômico influenciam essa predição, porque se o custo-benefício de contratar uma empresa de telemarketing não compensar, poderia simplesmente diminuir o gasto com propaganda de acordo com Moro et al. \cite{Moro:2014}. Estes por meio de modelo obtidos por meio de Neural Network, decision tree e SVI obtiveram métricas, como accuracy, prediction, recall com valores cerca de 90\%, fizemos algo similar mas utilizando o modelamento dos dados baseado em Logistic Regression, com a diferença que tratamos melhor os dados por meio de geração de mais features por meio de variáveis dummy a partir de dados categóricos. De 20 features originais, ficaram ao todo 54 features. Balanceamentos a amostra com respostas positivas e negativas à campanha utilizando a técnica SMOTE (Synthetic Minority Over-sampling Technique), isso mitigaria a geração de falsos positivos (FP) during o cross-validation (CRV) e durante o teste, normalizamos os dados antes de aplicar o método Logistic Regression, o que tornaria as metricas mais precisas, como o accuracy, precision, recall e f1-score, após a geração da matriz de confusão. Enquanto Moro et al. \cite{Moro:2014} utilizaram sensibility analysis e decision tree para classificar as features mais importantes para
+a análise qualitativa, utilizamos estatísticas básicas como média, desvio padrão, quantificação dos dados e a técnica RFE (Recursive Feature Elimination) para seleção das features mais
+importantes. Essa técnica foi usado por Susan Li \cite{TowardsDataScience:2017} para seleção das features antes do modelamento, o qual resultou em métricas muito boas, mas não ótima, com 
+métricas de 74\%.  Fizemos como Nelson Chris \cite{Medium:2019}, que utilizou todas as features originais e geradas, o mesmo também obteve um ótimo resultado com métricas em 91\%. Porém 
+o nosso escore foi melhor atingindo o escore com mais de 94\%, a diferença que utilizamos SMOTE, como realizado por Susan Li \cite{TowardsDataScience:2017}. 
+
+Para reforçar o aprendizado de Inteligência Artificial, somando com a fácil disponibilização públlica do dataset na UCI \cite{UCI:2014}, também encontrado no sítio kaggle.com, o qual se observou que se tratava de uma caso típico de aprendizado supervisionado, onde a variável dependente é simplesmente aceitação ou não da subscrição bancária e os dados independentes eram valores categóricos (e.g. profissão, estado conjugal, educação, etc.) e dados numéricos (e.g. idade, número de contatos, valor do euribor3m, etc.), a utilização do método Logistic Regression foi entendido como uma opção viável, reforçado pelo fato que o seu módulo existe no Python sklearn.
+
+Regressão Logística, ou Logistic Regression, em Machine Learning é uma técnica de aprendizado supervisionado que consiste na regressão de um modelo matemático que relaciona variáveis de entrada $X{_i} (i=1,2,...,n)$ a diferentes grupos de classificação. Para isso, é usada a função \textit{Sigmoid} para determinar a probabilidade de um determinado conjunto de variáveis a pertencerem a determinado grupo:
 
 \begin{ceqn}
 \begin{align}
@@ -86,16 +98,7 @@ J(\theta) = -\frac{1}{m}\displaystyle\sum_{i=1}^{m}y^{(i)}log(h_{\theta}(x^{(i)}
 \end{ceqn}
 
 Quando o melhor modelo de classificação é encontrado, tal classificação está relacionado apenas a uma classe, sendo considerado um modelo de classificação binária por apenas determinar se um dado pode ser considerado da classe em questão ou não.
-
-A escolha do tema de eficiência da campanha de vendas de depósitos bancários a termo foi baseado no artigo de Moro et al \cite{Moro:2014} e da disponibilidade dos dados no Repositório de Dados de Machine Learning da UCI \cite{UCI:2014}. O artigo refere-se à campanha de um banco português para obter mais clientes para um produto oferecido sobre depósitos bancários a termo, uma espécie de CDB do Brasil, cuja taxa de juro é baseada no euribor3m, que é uma taxa interbancária entre bancos da União Européia, com duração de 3 meses. A campanha foi realizada por meio de chamadas telefônicas ao telefone fixo residencial ou ao celular do potencial cliente. Uma abordagem ao cliente é realizada com uma certa duração onde são explicado o produto de venda em questão e anotados uma série de dados do perfil do cliente e também do momento sócio econômico. Alguns aceitam a subscrição bancária em troca do pagamento do juros após 3 meses, baseado na taxa euribor3m, outros simplesmente não aceitam. 
-
-Assim o banco gostaria de saber o que influencia o cliente na subscrição ao produto de venda em questão, se há possibilidade de predição de subscrição ao produto e quais dados do perfil do cliente ou quais dados do momento sócio econômico influenciam essa predição, porque se o custo-benefício de contratar uma empresa de telemarketing não compensar, poderia simplesmente diminuir o gasto com propaganda de acordo com Moro et al. \cite{Moro:2014}.
-
-O artigo de Moro et al \cite{Moro:2014} e a disponibilidade pública do dataset na UCI \cite{UCI:2014}, também encontrado no sítio kaggle.com, junto com conteúdo dado nas aulas de Inteligência Artificial (MO416A), nos encorajaram a exercitar o tópico de machine learning.
-
-Nos dados disponibilizados no sítio da UCI \cite{UCI:2014}, observou-se que se tratava de uma caso típico de aprendizado supervisionado, onde a variável dependente é simplesmente aceitação ou não da subscrição bancária e os dados independentes eram valores categóricos (e.g. profissão, estado conjugal, educação, etc.) e dados numéricos (e.g. idade, número de contatos, valor do euribor3m, etc.).
-
-Dois artigos, em especial, nos serviram de guia para a elaboração deste artigo. O primeiro foi um artigo da Susan Li \cite{TowardsDataScience:2017} que descreve como a preparação dos dataset de treinamento deve ser feito, balanceamento de amostra com a utilização da técnica SMOTE (Synthetic Minority Over-sampling Technique) onde se mostra como balancear amostras com respostas positivas à subscrição e com respostas negativas à subscrição, bem como redução de features por meio da técnica RFE (Recursive Feature Elimination), técnicas segundo as quais diminuiria casos de Falsos Positivos. E o artigo Nelson Chris \cite{Medium:2019} que utiliza um técnica de Feature Engineering, onde se cria um novo campo a partir do campo pdays para representar se ouve contato anterior ou não. Este campo tem uma valor específico 999 que é usado para quando nunca ouve um prévio contato com o cliente, e em outras vezes os valores representam dias passados desde o último contato. Ambos os artigos mostram como tratar de variáveis dummy para variáveis categóricas.
+.
 
 Este artigo está dividido da seguinte forma. A Seção II descreve como será abordado os problemas que queremos tratar, sobre as bibliografias utilizadas como referência. A Seção III descreve a proposição do trabalho, de como será tratado a análise dos dados e como medir o desempenho da campanha de promoção de vendas de depósitos bancários. A Seção IV será descrito os materiais e métodos utilizados para aquisição, formatação dos dados, criação e teste do modelo. A Seção V mostrará os resultados dos experimentos e uma breve discussão dos resultados da análise. A Seção VI descreverá as principais conclusões do experimento.
 
@@ -105,7 +108,7 @@ A abordagem do problema será por meio das fases do Machine Learning (ML approach
 
 \subsection{Extração dos Dados}
 
-Os dados serão extraídos da UCI \cite{UCI:2014}, onde o ds bank-additional-full.csv contém 90\% dos dados e será utilizado na fase de treinamento dos dados. O mesmo contém 41188 linhas e 20 colunas (features). E o ds bank-additional.csv contém 10\% dos dados, com 4199 linhas e 20 features ,e será utilizado para teste do modelo. Há outros dois ds, com menos dados, que não serão utilizados para este projeto. São o bank-full.csv e bank.csv.
+Os dados serão extraídos da UCI \cite{UCI:2014}, onde o ds bank-additional-full.csv contém 100\% dos dados e será utilizado na fase de treinamento, validação e teste dos dados. O mesmo contém 41188 linhas e 20 colunas (features). E o ds bank-additional.csv contém 10\% dos dados e 4199 linhas, mas como são dados extraídos do próprio ds bank-additional-full.csv, não há razão para utilizá-lo. Há outros dois ds, com menos dados, que não serão utilizados para este projeto. São o bank-full.csv e bank.csv.
 
 As variáveis dos datasets (ds) extraídos da UCI \cite{UCI:2014} são as seguintes:
 
@@ -179,7 +182,7 @@ A variável dependente y foi transformado em dados binários, em vez dos dados cat
 
 Foi criado uma nova variável independente pdays\_no\_contact derivado do pdays, de forma que o valor 999 ficou com o valor 1 (não houve contato) e 0 (houve contato), seguindo orientação do Nelson Chris \cite{Medium:2019}. 
 
-Foi verificado inicialmente que houve 11.26\% de subscrição e 88.72\% de não subscrição no ds de treinamento. Se utilizado o ds de treinamento sem balanceamento, haveria o risco de o modelo fazer predição com maior número de FP. Seguindo a recomendação da Susan Li \cite{TowardsDataScience:2017} , o dataset de treinamento foi balanceado utilizando o algoritmo SMOTE (Synthetic Minority Oversampling Tecnique).
+Foi verificado inicialmente que houve 11.26\% de subscrição e 88.72\% de não subscrição no ds bank-additional-full.csv. Se utilizado o ds de treinamento sem balanceamento, haveria o risco de o modelo fazer predição com maior número de FP (Falso Positivo). Seguindo a recomendação da Susan Li \cite{TowardsDataScience:2017} , o dataset de treinamento foi balanceado utilizando o algoritmo SMOTE (Synthetic Minority Oversampling Tecnique).
 
 As variáveis categóricas job, marital, education, default, housing, loan, month, day\_of\_week, poutcome foram transformadas em variáveis dummy, cujos valores viraram binários por meio da rotina get\_dummies da módulo pandas. Assim como exemplo, a variável categórica marital, que tem valores married, single, unknown, viraram novas variáveis binárias marital\_married, marital\_single, marital\_married. Tanto Nelson Chris como Susan Li utilizaram a técnica de criação de variáveis dummy para variáveis categóricas.
 
@@ -189,7 +192,13 @@ Realizamos também a normalização do ds das variáveis independentes ("X") por mei
 
 \subsection{Seleção das Features}
 
-Com a utilização do get\_dummies, o número de variáveis aumentou de 20 para 54 variáveis independentes. Assim, Susan Li \cite{TowardsDataScience:2017} utilizou a técnica RFE (Recursive Feature Elimination) para reduzir a quantidade de features, basicamente lista-se as variáveis independente com os seus pValue por meio do aplicativo summary2 do módulo Logit. Aquelas features que tiveram o pValue maiores que 5\% seriam retirados manual da amostra. Durante o treinamento e no cross-validation (CRV), tiveram ótimo desempenho, com accuracy maior que 90\%. Porém na utilização do modelo de Regressão Logística na amostra de teste, o resultado foi pífio. Houve aumento significativo de False Positive (FP), apenas 1 caso de True Positive (TP). Resolvemos fazer como Nelson Chris \cite{Medium:2019}, i.e. manter todas as 54 variáveis independentes.
+Com a utilização do get\_dummies, o número de variáveis aumentou de 20 para 54 variáveis independentes. Assim, Susan Li \cite{TowardsDataScience:2017} utilizou a técnica RFE (Recursive Feature Elimination) para reduzir a quantidade de features, basicamente lista-se as variáveis independente com os seus pValue por meio da função summary2 do módulo Logit. Aquelas features que tiveram o pValue maiores que 5\% seriam retirados manualmente da amostra. Mas o resultado não ficou bom, o precision, recall, f1-score ficaram em 74\%. Resolvemos fazer como Nelson
+Chris \cite{Medium:2019}, manter todos os 54 features ou variáveis independentes. Durante o treinamento e no cross-validation (CRV), tiveram ótimo desempenho, com todas as métricas
+maiores que 90\%. 
+
+A separação da variável dependente y e das variáveis dependentes X foram realizados pela função loc do módulo pandas.  A função train\_test\_split realizou a separação da
+amostra de treinamento em 90\% e amostra de teste em 10\%. Obtendo assim variáveis y e X de treinamento e teste. E o balanceamento das linhas com respostas positivas ("yes" ou 1)
+e respostas negativas ("no" ou 0) das variáveis de y e X de treinamento e teste foram realizados pelo módulo SMOTE.
 
 \subsection{Treinamento dos Dados}
 
@@ -198,31 +207,49 @@ Os dados de treinamento foram treinado com o algoritmo LogisticRegression do mód
 
 \subsection{Validação do Modelo (Cross Validation-CRV)}
 
-O modelo obtido a partir da amostra de de treinamento foi também aplicado tanto para a amostra de treinamento como para a amostra de verificação e medidos pela função score para obtenção do accuracy (acurácia) do modelo.
+O modelo obtido a partir da amostra de treinamento foi inicialmente validado pela função score do modelo.
+Na próxima etapa foi obtido o vetor de predição do y por meio da função predict do modelo. Com a qual foi gerado uma matriz de confusão entre o y real e o y predito. E também o
+relatório de classificação por meio da função classification\_report do módulo sklearn.metrics, para obter os valores de accuracy, precision, recall e f1-score.
 
-Foi também gerado uma matriz de confusão entre o y real e o y previsto, este foi obtido da função predict à amostra X.
+A matriz de confusão mostra uma matriz de 2 x 2, onde estão registrados o número de Falsos Positivos (FP), Falsos Negativos (FN), Verdadeiros Positivos (TP) e Verdadeiros Negativos (TN). Respostas verdadeiras são TP+TN, respostas falsas são FP+FN. 
 
-A matriz de confusão mostra uma matriz de 2 x 2, onde estão registrados o número de Falsos Positivos (FP), Falsos Negativos (FN), Verdadeiros Positivos (TP) e Verdadeiros Negativos (TN). Respostas verdadeiras são TP+TN, respostas falsas são FP+FN.
+A curva ROC é gerado com o módulo roc\_auc\_score to sklearn, bem como os valores de AUC (Area Under the Curve).
 
 
 \subsection{Teste do Modelo}
 Similar à metodologia aplicado ao CRV, mas aplicado à amostra de teste.
 
+\subsection{Análise Qualitativa}
+Foram utilizados os dados de treinamento para realização da análise qualitativa, levando-se em conta que a distribuição dos dados é a mesma que a da amostra de teste.
+Levando-se em conta, também, que o desempenho das métricas no CRV é similar ao de teste, o que garante que a distribuição dos dados seja a mesma.
+
+Como não foram descartados nenhuma feature, todas as features serão analisados com mais profundidade, de forma que serão detectados as features com menor relevância e aquelas 
+com maiores chances de obter respostas positivas da campanha. Assim, será inicialmente verificado o pvalue das features com a função summary2 do módulo stasmodels.api,
+aquelas features com valores maiores que 1\% seriam as features com menos relevantes. Por exemplo, education\_illiterate tem pvalue 8.72\% poderia ser considerado com
+menor relevância. A amostra de dados tem poucos casos de illiterate (analfabetos) comparados ao university.degree (nível universitário). Para verificar a importância das features,
+foi utilizado o RFE (Recursive Feature Elimination), assim foram listados as 50, 40, 30, 20, 10 features mais importantes. 
+
+As estatísticas básicas (média, desvio padrão)das variáveis numéricas foram obtidas com a função describe() do pandas. E quantificação dos dados das variáveis categóricas foram realizadas
+pela função value\_counts() do pandas.
+
+A comparação de grupos de variáveis numéricas de amostras com respostas positivas e negativas foi realizado com a função ttest\_ind do módulo scipy.stats. O pvalue \textless 1\% 
+indica rejeição da hipótese nula de igualdade entre as médias.
+
 \section{Trabalho Proposto}
 
-O trabalho proposto será a busca do modelo de predição de subscrição ao depósito bancário por meio do processo explicado no modelo da Figura \ref{strategy}. Basicamente, essa busca ocorrerá de forma interativa tratando o dataset da UCI \cite{UCI:2014}. A aceitação do modelo no CRV e no teste de modelo será por meio dos valores das métricas. Espera-se um desempenho superior a 90\% nas métricas de precision, AUC, F1.
+O trabalho proposto será a busca do modelo de predição de subscrição ao depósito bancário por meio do processo explicado no modelo da Figura \ref{strategy}. Basicamente, essa busca ocorrerá de forma interativa tratando o dataset da UCI \cite{UCI:2014}. A aceitação do modelo no CRV e no teste de modelo será por meio dos valores das métricas. Espera-se um desempenho superior a 90\% nas métricas de precision, recall, AUC, F1-score.
 
 \begin{figure}[htbp]
-	\centerline{\includegraphics[scale=0.30]{figuras/strategy.jpg}}
+	\centerline{\includegraphics[scale=0.35]{figuras/strategy.jpg}}
 	\caption{Estratégia de Treinamento, Cross-validation e Teste.}
 	\label{strategy}
 \end{figure}
 
 
 \subsection{Tabelas}
-Aqui a amostra de teste é submetida ao mesmo modelo obtido na fase de treinamento e validada no teste de CRV (Cross-Validation). Será o obtido a matriz de confusão, medido o accuracy, precision, F1-score, AUC e também será gerado o gráfico ROC.
+Aqui a amostra de teste é submetida ao mesmo modelo obtido na fase de treinamento, validado com o teste CRV (Cross-Validation). 
+Será o obtido a matriz de confusão, medido o accuracy, precision, recall, F1-score, AUC e também será gerado o gráfico ROC.
 
-Será verificado o número de respostas falsas e também será analisado os componentes principais que afetaram na decisão do y==1 (aceitação da subscrição).
 A tabela \ref{tab:desempenho} contém os valores das métricas obtidas durante o CRV e teste do modelo.
 %
 \begin{center}
@@ -230,39 +257,178 @@ A tabela \ref{tab:desempenho} contém os valores das métricas obtidas durante o C
 		\caption{Tabela de Desempenho.}\label{tab:desempenho}
 		\resizebox{}\columnwidth}{!}{%}
 		\centering    %% not "\center{...}"
-		\begin{tabular}{|c|c|c|c|c|c|c|c|}
+		\begin{tabular}{|c|c|c|c|c|c|c|}
 			\hline
-			Modelo&Amostra&Score&AUC&Accuracy&Precision&Recall&F1\\     %% no "&" at start of row
+			Modelo&Amostra&AUC&Accuracy&Precision&Recall&F1\\     %% no "&" at start of row
 			\hline
-			LR(CRV)&90\%&0.93&0.89&0.94&0.94&0.94&0.94\\     %% no "&" at start of row
+			\hline
+			LR(CRV)&90\%&0.89&0.94&0.94&0.94&0.94\\     %% no "&" at start of row
 			\hline        %% extra \hline at bottom of table
-			LR(Teste)&10\%&0.94&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
+			LR(Teste)&10\%&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+	\end{tabular}}
+\end{table}
+\end{center}
+
+A tabela \ref{qualy} é um sumário qualitativo das features obtida do Jupyter notebook Python3.ipynb.
+
+\begin{center}
+  \small\addtolength{\tabcolsep}{-6pt}
+  \begin{table}[!ht]       
+        \caption{Tabela qualitativa das features}
+        \label{qualy}
+            \begin{tabular}{|c|c|c|c|}
+                \hline   & Importância  & Valor &  \\ 
+                  feature & (RFE) & Estatístico & Comentário \\
+                \hline
+                \hline
+                \hline 0 age& 40+  & 40 +/- 13 anos & pvalue \textgreater 1\% \\ 
+                \hline 1 contact& 10+ & c30257/t2626 &  no(c20020/t12863) \\ 
+                \hline 2 duration& 40+ & 9.1 +/- 6.6 min &  no (3.6 +/- 3.4) \\ 
+                \hline 3 campaign& 40+ & 1.7 +/- 1.2 &  no(2.6 +/- 2.8)\\ 
+                \hline 4 pdays& 40+ & 789 +/- 405 dias &  no(984 +/- 120)\\ 
+                \hline 5 previous& 30+ & 0.3 +/- 0.7 &  no(0.1 +/- 0.4)\\ 
+                \hline 6 emp.var.rate& 30+ & -1.2 +/- 1.6 &  no(0.2 +/- 0.4)\\ 
+                \hline 7 cons.price.idx& 40+ & 93.3 +/- 0.6 &  no(93.6 +/- 0.5)\\ 
+                \hline 8 cons.conf.idx& 40+ & -39.8 +/- 5.9 &  no(-40.5 +/- 4.3)\\ 
+                \hline 9 euribor3m& 40+& 2.1 +/- 1.7 &  no(3.8 +/- 1.6)\\ 
+                \hline 10 nr.employed& 40+ & 5094 +/- 87 & no(5176 +/- 64) \\ 
+                \hline 11 pdays\_no\_contact& 50+ & - &  N.S. \\ 
+                \hline 12 job\_blue\_collar& (10) & 1452 & no(7735) \\ 
+                \hline 13 job\_entrepreneur& 10+ & 162 & no(1197) \\ 
+                \hline 14 job\_housemaid& (10) & 125 & no(863) \\ 
+                \hline 15 job\_management& 20+ & 448 & no(2304) \\ 
+                \hline 16 job\_retired& 20+ & 1612 & no(1145) \\ 
+                \hline 17 job\_self-employed& 10+ & 159 & no(1152) \\ 
+                \hline 18 job\_services& 10+ & 441 & no(3280) \\ 
+                \hline 19 job\_student& 30+ & 564 & no(536) \\ 
+                \hline 20 job\_technician& 20+ & 1492 & no(5437) \\ 
+                \hline 21 job\_unemployed& 40+ & 166 & no(789) \\ 
+                \hline 22 job\_unknown& 10+ & 33 & no(264) \\ 
+                \hline 23 marital\_married& 20+ & 11748 & no(12729) \\ 
+                \hline 24 marital\_single& 20+ & 6544 & no(8943)  \\ 
+                \hline 25 marital\_unknown& 50+ & 12 & no(62), N.S.\\                
+                \hline 26 education\_basic.6y& (10) & 260 & no(1862) \\ 
+                \hline 27 education\_basic.9y& (10) & 796 & no(5036) \\ 
+                \hline 28 education\_high.school& (10) & 2395 & no(7580) \\ 
+                \hline 29 education\_illiterate& 50+ & 3 & no(14), N.S. \\                
+                \hline 30 education\_professional.course& (10)  & 1027 & no(4186) \\ 
+                \hline 31 education\_university.degree& (10)  & 5834 & no(9463) \\ 
+                \hline 32 education\_unknown& (10) & 348 &  no(1342) \\ 
+                \hline 33 default\_unknown& 20+ & 983 &  no(7305) \\ 
+                \hline 34 default\_yes& 50+ & - &  N.S., bug \\
+                \hline 35 housing\_unknown& 30+ & 116 &  no(790)\\ 
+                \hline 36 housing\_yes& 30+ & 10503 &  no(15745)\\ 
+                \hline 37 loan\_unknown& 30+ & 116 &  no(1224)\\ 
+                \hline 38 loan\_yes& 30+ & 1224 &  no(4991)\\ 
+                \hline 39 month\_aug& 20+ & 2277 &  no(4969)\\ 
+                \hline 40 month\_dec& 40+ & 197 &  no(85)\\ 
+                \hline 41 month\_jul& 20+& 2387 &  no(5886)\\ 
+                \hline 42 month\_jun& 20+ & 2028 & no(4289) \\ 
+                \hline 43 month\_mar& 30+ & 757 & no(236) \\ 
+                \hline 44 month\_may& 16.89 & 3799 & no(236) \\ 
+                \hline 45 month\_nov& 10+ & 1172 & no(3327) \\ 
+                \hline 46 month\_oct& 30+ & 940 & no(364) \\ 
+                \hline 47 month\_sep& 30+ & 861 & no(286) \\ 
+                \hline 48 day\_of\_week\_mon& (10) & 1647 & no(6876) \\ 
+                \hline 49 day\_of\_week\_thu& 10+ & 2469 & no(6797) \\ 
+                \hline 50 day\_of\_week\_tue& 10+ & 2155 & no (6410) \\ 
+                \hline 51 day\_of\_week\_wed& 10+ & 2205 & no (6497) \\ 
+                \hline 52 poutcome\_nonexistent& 30+ & 13188 & no(3681) \\ 
+                \hline 53 poutcome\_success& (10) & 5942 & no(428) \\ 
+                \hline 
+            \end{tabular} 
+ 
+  \end{table} 
+\end{center}
+    
+O RFE 50+ significa que a feature seria eliminada se houvessem 50 features mais importante entre 54 possíveis. E da mesma forma, há 40+, 30+, 20+, 10+. 
+A feature com 50+ significa que é não significante (N.S.), possivelmente devido a poucos casos na amostra e também foi detectado
+um bug na feature default\_yes, o índice de captura não existia, portanto considerado também não significante (N.S.). Uma feature com 20+ indica que pode estar
+no grupo dos 30, 40 e 50 mais importantes.
+
+O dash (-) indica que não existe o valor ou pode ser insignificante.
+
+O RFE (10) indica que a feature está entre as 10 mais importantes e, assim, pode estar em quaisquer grupos dos 20, 30, 40, 50 features mais importantes.
+
+Uma feature pode não ser significativa para a determinação do y (aceitação ou não do plano), mas o seu valor estatístico pode ajudar
+na intepretação do perfil do cliente.
+
+A coluna Valor Estatístico mostra valores para os casos positivos (aceitou o plano de depósito bancário) e eventualmente os casos negativos (i.e. não aceitou o plano) são 
+postas na coluna Comentário. Assim, a notação no(....) indica valores em quantidade obtidos para os casos negativos.
+
+A notação média  (medium) +/- desvio padrão (std)são utilizadas para as features numéricas.
+
+Era de se esperar que se houvesse uma interseção de uma feature com resposta positivo [mínimo, máximo] contra resposta negativa [mínimo, máximo], o pvalue
+seria maior que 1\% para aceitar a hipótese nula de igualdade das médias entre duas amostras, porém o único caso que isso ocorreu foi na feature age (idade).
+Porém isso não ocorreu para outros casos, o pvalue foi menor que 1\% indicando que haveria que rejeitar a hipótese nula. Mesmo assim, a faixa de valores
+foram listadas na Tabela \ref{qualy}
+
+
+\section{Materiais e Métodos}
+O nosso trabalho pode ser avaliado por meio de comparação das métricas e pelas estratégias utilizadas.
+As métricas utilizadas referem-se aos valores obtidos durante a fase de teste do modelo, que são o AUC, Accuracy, Precision, Recall e F1.
+As estratégias são o SMOTE para balanceamento das amostras, Normalization dos dados antes de ajustar o modelo, RFE para eliminação de features
+no caso de \cite{TowardsDataScience:2017} e para determinação de importâncias das features no nosso caso, análise qualitativa (A.Q.) e
+utilização de estatística básica (B.S.), como por exemplo média, desvio padrão, totalização dos dados, aplicação do t-test para comparação de
+amostra de dados.
+
+A tabela \ref{tab:desempenho2} mostra as métricas utilizadas e as estratégias.
+%
+\begin{center}
+	\begin{table}[!ht]
+		\caption{Comparação de Desempenho entre referências sobre o uso de Logistic Regression e suas métricas e estratégias utilizadas.}\label{tab:desempenho2}
+		\resizebox{}\columnwidth}{}{%}
+		\centering    %% not "\center{...}"
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			Técnicas&Este Projeto&\cite{TowardsDataScience:2017}&\cite{Medium:2019}&\cite{Moro:2014}\\    
+			\hline
+			\hline
+			AUC&0.95&0.74&-&0.71\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			Accuracy&0.95&0.74&0.91&-\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			Precision&0.95&0.74&-&-\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			Recall&0.95&0.74&-&-\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			F1&0.95&0.74&-&-\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			SMOTE&yes&yes&no&no\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			Normalization&yes&no&yes&no\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			RFE&yes&yes&no&no\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
+			A.Q.&yes&no&no&yes\\     %% no "&" at start of row
+			\hline
+			B.S.&yes&no&no&yes\\     %% no "&" at start of row	
 			\hline        %% extra \hline at bottom of table
 	\end{tabular}}
 \end{table}
 \end{center}
 
 
-\section{Materiais e Métodos}
-
-"Todo trabalho deve ser submetido a algum tipo de teste para que possa ser avaliado. Na verdade, buscamos aqui uma validação com um caráter mais científico de seu trabalho (validação de hipótese). Busca-se identificar quais os seus pontos fortes e fracos. Nesta seção você deve descrever claramente quais foram e como foram conduzidos os testes, quais os materiais e as metodologias empregadas."  - Remover esse parágrafo depois.
-
-Aqui avaliamos a eficiência de nossa metodologia, dado na Figura \ref{strategy}, para predição de subscrição de depósito bancário a termo. Inicialmente, extraímos o dataset da UCI \cite{UCI:2014}, no entanto não foi possível garantir que os dados tivessem a mesma distribuíção, pois foram registrados de forma cronológica, critérios de sazonalidade não foram considerados, nem houve nenhuma planejamento amostral, apenas a utilização do dataset da forma pública que está disponibilizada. Não está explícito no trabalho de Moro et al. \cite{Moro:2014}, se houve algum critério para a escolha das variáveis independentes. Precisamos criar uma nova variável pdays\_no\_contact, como realizado por Nelson Chris \cite{Medium:2019}, pois era uma forma de representar o valor 999, que se referia a nenhum contato. Mesmo assim, a amostra pode conter algum viés estatístico pela inclusão de atributos do contexto sócio-econômico, cuja variação é por vezes trimestral (emp.var.rate e nr.employed), mensal (cons.price.idx e cons.conf.idx) e diário (euribor3m). Isso pode resultar em variáveis com pValue alto, ou seja pouco significativo.
-
-Isto pode ser comprovado com a análise de componentes principais, que corroborou que esses variáveis x, y, z, ...., não foram significativas para o modelo. "Atualizar ...."
-
-Utilizamos também a técnica SMOTE, como recomendado por Susan Li \cite{TowardsDataScience:2017}, para balancear casos com respostas positivas (yes) com as negativas (no) e dessa forma, mitigar as predições com respostas falsas, aquelas referidas como Falsos Positivos ou Falsos Negativos.
-
-
 \section{Resultados e Discussão}
+A campanha de promoção de vendas de depósito bancário à prazo, por meio de telemarketing, obteve subscrição de apenas 11\%, obtido na visualização de dados. Com os dados preparados, balanceados e normalizados, foi possível treinar finalmente os dados. O modelo ajustado com LogisticRegression do módulo sklearn, obteve um escore de 93\% durante na fase de treinamento. Depois na fase de CRV (Cross validation), obteve-se 31008 TN, 30577 TP, 1875 FP, 2308 FN por meio da matriz de confusão. Mostrando-se um modelo bastante equilibrado, confirmado com o desempenho das métricas accuracy (acurácia) de 94\%, weighted avg (média ponderada) com 94\% de precision (precisão), 94\% de recall, 94\% de f1-score e 89.4\% de AUC. Na fase de teste com 10\% do dataset, foi realizado o ajuste com o modelo e foi obtido um escore de 94.8\%, obteve-se uma matriz de confusão com 3507 de TN, 3443 de TP, 158 de FP e 222 de FN. Utilizando-se da predição da variável y (subscrição ou não ao depósito a termo) com o y real, obteve-se a classificação com o accuracy de 95\%, weighted avg de precision de 95\%, recall de 95\%, f1-score de 95\% e AUC de 95\%. Mostrando que o modelo obtido na fase de treinamento é também ajustado para a fase de teste. As métricas tiveram um bom desempenho porque não foram descartados nenhumas das 54 features, inclusive aquelas geradas pelas variáveis dummy.
 
-"Nesta seção você deve apresentar claramente os resultados obtidos para os testes efetuados. Procure organizar os dados utilizando uma linguagem científica. Algumas opções são o uso de tabelas e gráficos, para que a compreensão seja fácil e rápida. " - remover depois.
+Na análise qualitativa foi possível entender melhor os perfis dos clientes que aceitaram a subscrição da campanha do depósito a termo. Estes tem em média 40 anos, tem formação no mínimo com ensino primário (de 9 anos) até o nível universitário, trabalham na maioria como operário (blue-collar), aposentados, técnicos, em menor grau funcionário administrativo, serviços, até estudante. Uma proporção de 64\% de casados e 35\% de solteiros. Menos de 5\% tem empréstimo pessoal. Apesar da maioria desses clientes não terem sido abordados anteriormente em nenhuma campanha anterior, aqueles que foram abordados com sucesso na campanha passada se subscreveram com maior chance de sucesso na atual campanha. Estes foram abordados 2.78 vezes mais anteriormente que aqueles que não aceitaram nesta campanha. Na maior parte das vezes, os clientes foram abordados por meio de celular. Daqueles que não aceitaram, 40\% foram atendidos por meio de telefone fixo. A duração média da chamada foi de 9.1 minutos contra 3.7 minutos para quem não se subscreveu. Aparentemente, o cliente que vai se subscrever tem a propensão de escutar mais. Os meses de maior abordagem ao cliente foram maio, junho, julho e agosto -correspondente ao verão europeu - porém novembro foi uma das 20 mais importante variável, segundo o RFE. Segunda-feira, foi considerado uma das 10 mais importante feature, por alguma razão. O cliente teve em média 1.72 contatos contra 2.62 daqueles clientes que não aceitaram a campanha. As variáveis do momento sócio-econônomico, apesar de ter sido testada com o t-test do sklearn com pvalue \textless 1\%, não dá para garantir que os índices sejam diferentes entre os casos positivos e os negativos, pois as médias estão entre 1-2\% entre um e outro, estes são o caso do número de empregos, taxa de variação do emprego, índice do preço ao consumidor, e índice de confiança do consumidor, exceto a euribor3m que estava 55\% do valor dos casos negativos, pois nem configuram entre os 30 features mais importantes, segundo o RFE, confirmando a suspeita inicial de que esses índices seriam poucos influentes na decisão de subscrição à campanha.
 
 \section{Conclusões}
+Este projeto consolidou o conhecimento de todas as etapas para realização de um projeto de Machine Learning, desde a extração, tratamento, seleção, normalização e balanceamento dos dados,
+antes do treinamento da amostra ou dataset com algum modelo, a obtenção das métricas com valores de qualidade depende muito de como é tratado as etapas iniciais.
 
-Nesta seção, faça uma análise geral de seu trabalho, levando em conta todo o processo de desenvolvimento e os resultados. Quais os seus pontos fortes? Quais os seus pontos fracos? Quais aspectos de sua metodologia de trabalho foram positivas? Quais foram negativas? O que você recomendaria (ou não recomendaria) a outras pessoas que estejam realizando trabalhos similares aos seus? 
+O ponto forte do nosso projeto foi o procedimento adotado na etapa inicial de preparação dos dados. Os pontos fracos seriam a análise qualitativa, faltaram-nos 
+conhecimento de mais ferramentas que pudessem extrair as features mais importantes de forma mais automáticas. A estatística básica do t-test aparentemente é pouco confiável, os valores do
+pvalue resultam em valores muito baixo, enquanto se espera valores mais altos, observando-se os valores das médias e desvios padrões das features numéricas, conclui-se que há muita
+chance de ter casos de falsos positivos, assim ficava muito difícil extrair as features mais importantes, por isso foi usado o RFE. Tentamos utilizar também o regularization para  
+esse propósito, mas sem sucesso.
 
-A campanha de promoção de vendas de depósito bancário à prazo, por meio de telemarketing, obteve subscrição de apenas 11 \% dos potenciais clientes abordados. Possivelmente, devido ao fato que a abordagem para determinadas classes ou condições sociais econômicas sejam impeditivas ou não entenderem o tipo de investimento que lhes são propostos. Depósito bancário à prazo pode ser interessante se os juros pagos no resgate forem também interessantes. O euribor3m é a é taxa interbancária contra a qual um grupo representativo de bancos europeus contrai empréstimos mutuamente cuja duração é de 3 meses, muito similar o CDB do Brasil, o ajuste de juros de empréstimos, conta poupança, hipoteca, etc seguem essa taxa. O nosso modelo indicou o eurobor3m como feature importante, como esperado que fosse. Algumas pessoas veem valor com esse tipo de transação bancária, pois pode emprestar o dinheiro por um tempo para o banco em troca de juros, como é o caso de aposentados (job\_retired) e estudantes (job\_student), pois tem nível universitário (education\_university.degree) e portanto é de se esperar que entendam o mecanismo da aplicação financeira. O clima econômico parece favorecer potenciais clientes para aquisição da aplicação como indica a média trimestral do número total de cidadãos empregados (nr.employed) e a taxa de variação de empregabilidade trimestral (emp.var.rate). A enquete durante a campanha mostra que potenciais clientes escondem se os mesmos tem algum problema com débitos pendentes (default\_unknown). Contato por meio de telefone ou celular (contact), ou mais de um contato (campaign), com o cliente, também se já houve um contato prévio bem sucedido (poutcome\_success) ou não existente (poutcome\_nonexistent), com uma certa duração (duration), parecem influir na aquisição do plano do depósito à prazo. Alguns meses no ano tiveram melhor aceitação da campanha como março, maio, julho, agosto, setembro, novembro e dezembro. O melhor dia da semana para abordar clientes foi quarta-feira.
+A recomendação básica para quaisquer interessados em treinar dataset com tipos numéricos e categóricos é utilizar o nosso procedimento na etapa inicial de preparação dos dados.
+Existe uma boa chance de se obter um bom modelo de predição.
+
+
 
 %******************************************************************************
 % Referências - Definidas no arquivo Relatorio.bib
