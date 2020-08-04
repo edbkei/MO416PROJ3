@@ -1,15 +1,16 @@
 import argparse
 import time
 
-import numpy as np
 import pandas as pd
+import numpy as np
+from imblearn.over_sampling import SMOTE
+from sklearn import linear_model
+from sklearn.feature_selection import RFE
+import statsmodels.api as sm
 
-from methods.cost_calculus import CostCalculus
-from methods.logistic_regressor import LogisticRegressor
 from metric.confusion_matrix import ConfusionMatrix
-from metric.predict_regressor import PredictRegressor
 from metric.regressor_stats import RegressorStats
-from methods.scikit_regressor import ScikitRegressor
+from metric.roc_curve import ROCCurve
 
 
 def str2bool(v):
@@ -24,6 +25,7 @@ def str2bool(v):
 parser = argparse.ArgumentParser(description='Logistic Regression.')
 parser.add_argument('-dataset', dest='dataset')
 parser.add_argument('-plot-confusion-matrix', dest='plot_confusion_matrix', type=str2bool, nargs='?')
+parser.add_argument('-plot-roc-curve', dest='plot_roc_curve', type=str2bool, nargs='?')
 parser.add_argument('-plot-error', dest='plot_error', type=str2bool, nargs='?')
 
 FRAC_VALIDATION = 0.2
@@ -44,150 +46,6 @@ def normalize(df_values, mean=None, std=None):
         df_values[i] = (df_values[i] - mean)/std
 
     return df_values, mean, std
-
-def print_stats(y_real, y_pred, data_type='Train'):
-    stats = RegressorStats.get_stats(y_real, y_pred)
-    print('%s accuracy: %.2f' % (data_type, stats['accuracy']))
-    print('%s precision: %.2f' % (data_type, stats['precision']))
-    print('%s recall: %.2f' % (data_type, stats['recall']))
-    print('%s f0.5 score: %.2f' % (data_type, stats['f0.5']))
-    print('%s f1 score: %.2f' % (data_type, stats['f1']))
-    print('%s f2 score: %.2f' % (data_type, stats['f2']))
-
-def print_regressors(regressors):
-    for regressor in regressors:
-        print(regressor['regressor'])
-
-def logistic_regression_one_vs_all(args, classes, train_set_x, train_set_y, val_set_x, val_set_y, test_set_x, test_set_y):
-    print("Starting Logistic Regression One-vs-All...")
-    val = input('Set maximum iterations (default: 100): ')
-    max_iterations = 100
-    if val != '':
-        max_iterations = int(val)
-    val = input('Set learning rate (default: 0.01): ')
-    learning_rate = 0.01
-    if val != '':
-        learning_rate = float(val)
-    val = input('Set tolerance (default: 0.000001): ')
-    tolerance = 0.000001
-    if val != '':
-        tolerance = float(val)
-
-    start_time = time.process_time()
-
-    regressors = LogisticRegressor.regressor(train_set_x, train_set_y, val_set_x, val_set_y, max_iterations,
-                                             learning_rate, tolerance, method='bgd', type='onevsall')
-
-    print('\nLogistic Regressor One-vs-All:')
-    print('Coefficients (model): ')
-    print_regressors(regressors)
-    print('Final mean train error (all classes): \n', RegressorStats.mean_error(regressors, 'train_error'))
-    print('Final mean validation error (all classes): \n', RegressorStats.mean_error(regressors, 'val_error'))
-    print_stats(train_set_y, PredictRegressor.predict(regressors, train_set_x), data_type='Train')
-    print_stats(val_set_y, PredictRegressor.predict(regressors, val_set_x), data_type='Validation')
-    print_stats(test_set_y, PredictRegressor.predict(regressors, test_set_x), data_type='Test')
-
-    print("Execution time: %s seconds" % str(time.process_time() - start_time))
-
-    if (args.plot_confusion_matrix):
-        ConfusionMatrix.plot_confusion_matrix(test_set_y, PredictRegressor.predict(regressors, test_set_x),
-                                              classes)
-
-    if(args.plot_error):
-        CostCalculus.plot_error_logistic(regressors, classes)
-
-def multinomial_logistic_regression(args, classes, train_set_x, train_set_y, val_set_x, val_set_y, test_set_x, test_set_y):
-    print("Starting Multinomial Logistic Regression...")
-    val = input('Set maximum iterations (default: 100): ')
-    max_iterations = 100
-    if val != '':
-        max_iterations = int(val)
-    val = input('Set learning rate (default: 0.01): ')
-    learning_rate = 0.01
-    if val != '':
-        learning_rate = float(val)
-    val = input('Set tolerance (default: 0.000001): ')
-    tolerance = 0.000001
-    if val != '':
-        tolerance = float(val)
-
-    start_time = time.process_time()
-
-    regressors = LogisticRegressor.regressor(train_set_x, train_set_y, val_set_x, val_set_y, max_iterations, learning_rate, tolerance,
-              method='bgd', type='multinomial')
-
-    print('\nMultinomial Logistic Regressor:')
-    print('Coefficients (model): \n', regressors[0]['regressor'])
-    print('Final Train error: \n', regressors[0]['train_error'][regressors[0]['final_iteration']])
-    print('Final validation error: \n', regressors[0]['val_error'][regressors[0]['final_iteration']])
-    print_stats(train_set_y, PredictRegressor.predict(regressors, train_set_x, type='multinomial'), data_type='Train')
-    print_stats(val_set_y, PredictRegressor.predict(regressors, val_set_x, type='multinomial'), data_type='Validation')
-    print_stats(test_set_y, PredictRegressor.predict(regressors, test_set_x, type='multinomial'), data_type='Test')
-
-    print("Execution time: %s seconds" % str(time.process_time() - start_time))
-
-    if (args.plot_confusion_matrix):
-        ConfusionMatrix.plot_confusion_matrix(test_set_y,
-                                              PredictRegressor.predict(regressors, test_set_x, type='multinomial'),
-                                              classes)
-
-    if(args.plot_error):
-        CostCalculus.plot_error_softmax(regressors)
-
-def scikit_ovr_logistic_regression(args, classes, train_set_x, train_set_y, val_set_x, val_set_y, test_set_x, test_set_y):
-    print("Starting Scikit Logistic Regression...")
-    val = input('Set maximum iterations (default: 100): ')
-    max_iterations = 100
-    if val != '':
-        max_iterations = int(val)
-    val = input('Set tolerance (default: 0.000001): ')
-    tolerance = 0.000001
-    if val != '':
-        tolerance = float(val)
-
-    start_time = time.process_time()
-
-    model = ScikitRegressor.ovr_regressor(train_set_x, train_set_y.values, max_iterations, tolerance)
-
-    print('\nLogistic Regressor One-vs-All Scikit Learn:')
-    print('Coefficients (model): \n', model.coef_)
-    print('Intercept: \n', model.intercept_)
-    print_stats(train_set_y, model.predict(train_set_x), data_type='Train')
-    print_stats(val_set_y, model.predict(val_set_x), data_type='Validation')
-    print_stats(test_set_y, model.predict(test_set_x), data_type='Test')
-
-    print("Execution time: %s seconds" % str(time.process_time() - start_time))
-
-    if (args.plot_confusion_matrix):
-        ConfusionMatrix.plot_confusion_matrix(test_set_y, model.predict(test_set_x), classes)
-
-
-def scikit_multinomial_logistic_regression(args, classes, train_set_x, train_set_y, val_set_x, val_set_y, test_set_x, test_set_y):
-    print("Starting Scikit Logistic Regression...")
-    val = input('Set maximum iterations (default: 100): ')
-    max_iterations = 100
-    if val != '':
-        max_iterations = int(val)
-    val = input('Set tolerance (default: 0.000001): ')
-    tolerance = 0.000001
-    if val != '':
-        tolerance = float(val)
-
-    start_time = time.process_time()
-
-    model = ScikitRegressor.multinomial_regressor(train_set_x, train_set_y.values, max_iterations, tolerance)
-
-    print('\nMultinomial Logistic Regressor Scikit Learn:')
-    print('Coefficients (model): \n', model.coef_)
-    print('Intercept: \n', model.intercept_)
-    print_stats(train_set_y, model.predict(train_set_x), data_type='Train')
-    print_stats(val_set_y, model.predict(val_set_x), data_type='Validation')
-    print_stats(test_set_y, model.predict(test_set_x), data_type='Test')
-
-    print("Execution time: %s seconds" % str(time.process_time() - start_time))
-
-    if (args.plot_confusion_matrix):
-        ConfusionMatrix.plot_confusion_matrix(test_set_y, model.predict(test_set_x), classes)
 
 def label_encode(df):
     df.job = df.job.astype('category').cat.rename_categories({
@@ -245,10 +103,26 @@ def one_hot_encode(df):
 
     return df
 
+def select_rfe_features(df):
+    cols = ['euribor3m', 'job_blue-collar', 'job_housemaid', 'marital_unknown', 'education_illiterate', 'default_no',
+            'default_unknown',
+            'contact_cellular', 'contact_telephone', 'month_apr', 'month_aug', 'month_dec', 'month_jul', 'month_jun',
+            'month_mar',
+            'month_may', 'month_nov', 'month_oct', "poutcome_failure", "poutcome_success"]
+
+    return df[cols]
+
+def drop_logit_features(df):
+    return df.drop('default_no', axis=1) \
+             .drop('default_unknown', axis=1) \
+             .drop('contact_cellular', axis=1) \
+             .drop('contact_telephone', axis=1)
+
 def init_dataset(args):
     print("Initializing dataset...")
 
     df_ds = one_hot_encode(pd.read_csv(args.dataset,header=0,sep=';'))
+
     test_set = df_ds.sample(frac=FRAC_TEST, random_state=1)
     df_train = df_ds.drop(test_set.index)
 
@@ -274,6 +148,20 @@ def init_dataset(args):
     test_set_x = test_set.iloc[:, :-1]
     test_set_y = test_set.iloc[:, -1]
 
+    os = SMOTE(random_state=0)
+    training_set_x, training_set_y = os.fit_sample(training_set_x, training_set_y)
+
+    # training_set_x = select_rfe_features(training_set_x)
+    # training_set_x = drop_logit_features(training_set_x)
+    # validation_set_x = select_rfe_features(validation_set_x)
+    # validation_set_x = drop_logit_features(validation_set_x)
+    # test_set_x = select_rfe_features(test_set_x)
+    # test_set_x = drop_logit_features(test_set_x)
+    #
+    # logit_model = sm.Logit(training_set_y, training_set_x)
+    # result = logit_model.fit()
+    # print(result.summary2())
+
     # Data pre-processing
     training_set_x, training_mean, training_std = normalize(training_set_x.values)
     validation_set_x, _, _ = normalize(validation_set_x.values, training_mean, training_std)
@@ -283,6 +171,14 @@ def init_dataset(args):
 
     return classes, training_set_x, training_set_y, validation_set_x, validation_set_y, test_set_x, test_set_y
 
+def print_stats(y_real, y_pred, data_type='Train'):
+    stats = RegressorStats.get_stats(y_real, y_pred)
+    print('%s accuracy: %.2f' % (data_type, stats['accuracy']))
+    print('%s precision: %.2f' % (data_type, stats['precision']))
+    print('%s recall: %.2f' % (data_type, stats['recall']))
+    print('%s f0.5 score: %.2f' % (data_type, stats['f0.5']))
+    print('%s f1 score: %.2f' % (data_type, stats['f1']))
+    print('%s f2 score: %.2f' % (data_type, stats['f2']))
 
 def main():
     args = parser.parse_args()
@@ -291,27 +187,24 @@ def main():
     classes, training_set_x, training_set_y, validation_set_x, validation_set_y, test_set_x, test_set_y = init_dataset(args)
     print("Dataset initialization time: %s seconds" % str(time.process_time() - start_time))
 
-    print('Choose your method:')
-    print('1 - Logistic Regression One-vs-All')
-    print('2 - Multinomial Logistic Regression')
-    print('3 - Scikit Logistic Regression One-vs-All')
-    print('4 - Scikit Multinomial Logistic Regression')
-    print('Anyone - Exit')
+    model = linear_model.LogisticRegression(multi_class='multinomial', solver='sag', max_iter=3000, tol=0.000001)
 
-    option = int(input('Option: '))
+    #rfe_model = RFE(model, 20)
+    # Fit model
+    #rfe_model = rfe_model.fit(training_set_x, training_set_y)
 
-    if option == 1:
-        logistic_regression_one_vs_all(args, classes, training_set_x, training_set_y, validation_set_x, validation_set_y,
-                                       test_set_x, test_set_y)
-    elif option == 2:
-        multinomial_logistic_regression(args, classes, training_set_x, training_set_y, validation_set_x, validation_set_y,
-                                        test_set_x, test_set_y)
-    elif option == 3:
-        scikit_ovr_logistic_regression(args, classes, training_set_x, training_set_y, validation_set_x, validation_set_y,
-                                       test_set_x, test_set_y)
-    elif option == 4:
-        scikit_multinomial_logistic_regression(args, classes, training_set_x, training_set_y, validation_set_x, validation_set_y,
-                                               test_set_x, test_set_y)
+    model = model.fit(training_set_x, training_set_y)
+
+    print_stats(training_set_y, model.predict(training_set_x), data_type='Train')
+    print_stats(validation_set_y, model.predict(validation_set_x), data_type='Validation')
+    print_stats(test_set_y, model.predict(test_set_x), data_type='Test')
+
+    print("Execution time: %s seconds" % str(time.process_time() - start_time))
+
+    if (args.plot_roc_curve):
+        ROCCurve.plot_roc_curve(test_set_y, model.predict(test_set_x), model.predict_proba(test_set_x))
+    if (args.plot_confusion_matrix):
+        ConfusionMatrix.plot_confusion_matrix(test_set_y, model.predict(test_set_x), classes)
 
 
 if __name__ == '__main__':
