@@ -75,7 +75,7 @@ Nelson Chris \cite{Medium:2019} com 91\% e Susan Li \cite{TowardsDataScience:201
 A escolha do tema avaliação da campanha de vendas de depósitos bancários a termo foi baseado no artigo de Moro et al \cite{Moro:2014} e da disponibilidade dos dados no Repositório de Dados de Machine Learning da UCI \cite{UCI:2014}. O artigo refere-se à campanha de um banco português para obter mais clientes para um produto oferecido sobre depósitos bancários a termo, uma espécie de CDB do Brasil, cuja taxa de juro compete com o euribor3m, que é uma taxa interbancária entre bancos da União Européia, com duração de 3 meses. A campanha foi realizada por meio de chamadas telefônicas ao telefone fixo residencial ou ao celular do potencial cliente. Uma abordagem ao cliente é realizada com uma certa duração onde são explicado o produto de venda em questão e anotados uma série de dados do perfil do cliente e também do momento sócio econômico. Alguns aceitam a subscrição bancária em troca do pagamento do juros após um período de carência e outros simplesmente não aceitam. 
 
 Assim o banco quiz saber o que influencia o cliente na subscrição ao produto de venda em questão, se há possibilidade da predição de subscrição ao produto e quais dados dos perfis dos cliente ou quais dados do momento sócio econômico influenciam essa predição, porque se o custo-benefício de contratar uma empresa de telemarketing não compensar, poderia simplesmente diminuir o gasto com propaganda de acordo com Moro et al. \cite{Moro:2014}. Estes por meio de modelo obtidos por meio de Neural Network, decision tree e SVI obtiveram métricas, como accuracy, prediction, recall com valores cerca de 90\%, fizemos algo similar mas utilizando o modelamento dos dados baseado em Logistic Regression, com a diferença que tratamos melhor os dados por meio de geração de mais features por meio de variáveis dummy a partir de dados categóricos. De 20 features originais, ficaram ao todo 54 features. Balanceamentos a amostra com respostas positivas e negativas à campanha utilizando a técnica SMOTE (Synthetic Minority Over-sampling Technique), isso mitigaria a geração de falsos positivos (FP) during o cross-validation (CRV) e durante o teste, normalizamos os dados antes de aplicar o método Logistic Regression, o que tornaria as metricas mais precisas, como o accuracy, precision, recall e f1-score, após a geração da matriz de confusão. Enquanto Moro et al. \cite{Moro:2014} utilizaram sensibility analysis e decision tree para classificar as features mais importantes para
-a análise qualitativa, utilizamos estatísticas básicas como média, desvio padrão, quantificação dos dados e a técnica RFE (Recursive Feature Elimination), inclusive o DT, para seleção das features maisimportantes. 
+a análise qualitativa, utilizamos estatísticas básicas como média, desvio padrão, quantificação dos dados e a técnica RFE, inclusive o DT, para seleção das features mais importantes. 
 Essa técnica foi usado por Susan Li \cite{TowardsDataScience:2017} para seleção das features antes do modelamento, o qual resultou em métricas muito boas, mas não ótima, com 
 métricas de 74\%.  Fizemos como Nelson Chris \cite{Medium:2019}, que utilizou todas as features originais e geradas, o mesmo também obteve um ótimo resultado com métricas em 91\%. Porém 
 o nosso escore foi melhor atingindo o escore com mais de 94\% com o LR e 91\% com o DT, a diferença que utilizamos SMOTE, como realizado por Susan Li \cite{TowardsDataScience:2017}. 
@@ -193,7 +193,7 @@ Realizamos também a normalização do ds das variáveis independentes ("X") por mei
 
 \subsection{Seleção das Features}
 
-Com a utilização do get\_dummies, o número de variáveis aumentou de 20 para 54 variáveis independentes. Assim, Susan Li \cite{TowardsDataScience:2017} utilizou a técnica RFE (Recursive Feature Elimination) para reduzir a quantidade de features, basicamente lista-se as variáveis independente com os seus pValue por meio da função summary2 do módulo Logit. Aquelas features que tiveram o pValue maiores que 5\% seriam retirados manualmente da amostra. Mas o resultado não ficou bom, o precision, recall, f1-score ficaram em 74\%. Resolvemos fazer como Nelson
+Com a utilização do get\_dummies, o número de variáveis aumentou de 20 para 54 variáveis independentes. Assim, Susan Li \cite{TowardsDataScience:2017} utilizou a técnica RFE para reduzir a quantidade de features, basicamente lista-se as variáveis independente com os seus pValue por meio da função summary2 do módulo Logit. Aquelas features que tiveram o pValue maiores que 5\% seriam retirados manualmente da amostra. Mas o resultado não ficou bom, o precision, recall, f1-score ficaram em 74\%. Resolvemos fazer como Nelson
 Chris \cite{Medium:2019}, manter todos os 54 features ou variáveis independentes. Durante o treinamento e no cross-validation (CRV), tiveram alto desempenho, com todas as métricas
 maiores que 90\%. 
 
@@ -228,7 +228,7 @@ Como não foram descartados nenhuma feature, todas as features serão analisados c
 com maiores chances de obter respostas positivas da campanha. Assim, será inicialmente verificado o pvalue das features com a função summary2 do módulo stasmodels.api,
 aquelas features com valores maiores que 1\% seriam as features com menos relevantes. Por exemplo, education\_illiterate tem pvalue 8.72\% poderia ser considerado com
 menor relevância. A amostra de dados tem poucos casos de illiterate (analfabetos) comparados ao university.degree (nível universitário). Para verificar a importância das features,
-foi utilizado o RFE (Recursive Feature Elimination), assim foram listados as 50, 40, 30, 20, 10 features mais importantes. 
+foi utilizado o RFE, assim foram listados as 50, 40, 30, 20, 10 features mais importantes. 
 
 As estatísticas básicas (média, desvio padrão)das variáveis numéricas foram obtidas com a função describe() do pandas. E quantificação dos dados das variáveis categóricas foram realizadas
 pela função value\_counts() do pandas.
@@ -439,8 +439,7 @@ O ponto forte do nosso projeto foi o procedimento adotado na etapa inicial de pr
 vantagem de poder realizar uma categorização com uma abstração muito maior, por meio de grafos da árvore de decisão.
 
 A recomendação básica para quaisquer interessados em treinar dataset com tipos numéricos e categóricos é utilizar o nosso procedimento na etapa inicial de preparação dos dados.
-Existe uma boa chance de se obter um bom modelo de predição. O classificador decision tree pode ser uma boa alternativa também e tem um bom desempenho. Se a árvore ficar muito grande,
-o grafo gerado em .png, .jpg., .pdf perde muito a qualidade, portanto é melhor gerar grafo em formato .svg e depois convertê-lo para .png.
+Existe uma boa chance de se obter um bom modelo de predição. O classificador decision tree em caso de dataset composta por features categóricas e numéricas é o mais recomendável.
 
 
 
