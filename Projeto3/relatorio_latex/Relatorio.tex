@@ -57,15 +57,16 @@
 % Resumo do trabalho
 \begin{abstract}
 Avaliamos a eficiência do modelo de predição de promoção de vendas de depósitos bancários a termo (depósito à prazo em troca de pagamento de juros) para um banco português por meio de telemarketing e também tentamos traçar o perfil de clientes que aceitam esse tipo de plano, se há alguma influência devido à atributos (features) próprios, algum contexto sócio-econômico, ou a forma de abordagem do operador de telemarketing ao cliente. Diferente do estudo realizado por Moro et Al. \cite{Moro:2014} cujo estudo foi mais para satisfazer o banco com
-informações detalhadas da campanha para assim customizar futuros investimentos na área de marketing, enquanto que o nosso objetivo é puramente acadêmico, onde iremos aplicar conceitos que melhoram a qualidade da informação dos dados, por meio de preparação de dados, onde realizamos o balanceamento do dataset de treinamento e teste por meio da técnica SMOTE, 
+informações detalhadas da campanha para assim customizar futuros investimentos na área de marketing, o nosso objetivo é puramente acadêmico, onde iremos aplicar conceitos que melhoram a qualidade da informação dos dados, por meio de preparação de dados, onde realizamos o balanceamento do dataset de treinamento e teste por meio da técnica SMOTE, 
 criação de novas features através de variáveis dummy e a normalização dos dados para assim treinar o modelo, no nosso caso o Logistic Regression (LR) e o Decision Tree (DT). Essa metodologia foi fundamental para obter métricas superiores aos casos da referência. Obtivemos métricas (auc, accuracy, recall, f1-score) com valores superiores a 94\% utilizando Logistic Regression e 91\% utilizando o DT, com a vantagem de classificar melhor as importâncias das features, enquanto que Moro et Al. \cite{Moro:2014} obtiveram 80\%,
-Nelson Chris \cite{Medium:2019} com 91\% e Susan Li \cite{TowardsDataScience:2017} com 74\%, utilizando o mesmo dataset.  Diferente dos casos da referência, adicionamos uma atividade extra para realizar análise qualitativa, por meio de estatística básica das features (média, desvio padrão, t-test, quantificação básica) e também com o uso RFE (Recursive Feature Elimination) não para eliminar features, mas para priorizá-las, e assim finalmente poder traçar os perfis dos clientes que aceitam a subscrição do plano de depósito a termo. Comparamos também as importâncias das features entre LR, RFE, DT, este com o melhor equilíbrio entre as features numéricas e categóricas.  A eficiência dessa metodologia pode ser comprovada com a melhor qualidade nas métricas e um melhor conhecimento das features. Nosso projeto está armazenado no sítio \footnote{https://github.com/edbkei/MO416PROJ3/tree/master/Projeto3}.
+Nelson Chris \cite{Medium:2019} com 91\% e Susan Li \cite{TowardsDataScience:2017} com 74\%, utilizando o mesmo dataset.  Diferente dos casos da referência, adicionamos uma atividade extra para realizar análise qualitativa, por meio de estatística básica das features (média, desvio padrão, t-test, quantificação básica) e também com o uso RFE (Recursive Feature Elimination) não para eliminar features, mas para priorizá-las, e assim finalmente poder traçar os perfis dos clientes que aceitam a subscrição do plano de depósito a termo. Comparamos também as importâncias das features entre LR, RFE e DT, este com o melhor equilíbrio entre as features numéricas e categóricas.  A eficiência dessa metodologia pode ser comprovada com a melhor qualidade nas métricas e um melhor conhecimento das features. Nosso projeto está armazenado no sítio \footnote{https://github.com/edbkei/MO416PROJ3/tree/master/Projeto3}.
 \end{abstract}
 
 % Indique três palavras-chave que descrevem o trabalho
 \begin{IEEEkeywords}
  Machine Learning (ML), dataset (DS), Regressão Logística (LR), Decision Tree (DT), Recursive Feature Elimination (RFE),
- Synthetic Minority Over-Sampling Technique (SMOTE), Cross-validation (CRV).
+ Synthetic Minority Over-Sampling Technique (SMOTE), Cross-validation (CRV), FP
+ Falso Positivo, FN (Falso negativo), TP (Verdadeiro Positivo), TN (Verdadeiro Negativo)
 \end{IEEEkeywords}
 
 %%*****************************************************************************
@@ -74,13 +75,13 @@ Nelson Chris \cite{Medium:2019} com 91\% e Susan Li \cite{TowardsDataScience:201
 \section{Introdução}
 A escolha do tema avaliação da campanha de vendas de depósitos bancários a termo foi baseado no artigo de Moro et al \cite{Moro:2014} e da disponibilidade dos dados no Repositório de Dados de Machine Learning da UCI \cite{UCI:2014}. O artigo refere-se à campanha de um banco português para obter mais clientes para um produto oferecido sobre depósitos bancários a termo, uma espécie de CDB do Brasil, cuja taxa de juro compete com o euribor3m, que é uma taxa interbancária entre bancos da União Européia, com duração de 3 meses. A campanha foi realizada por meio de chamadas telefônicas ao telefone fixo residencial ou ao celular do potencial cliente. Uma abordagem ao cliente é realizada com uma certa duração onde são explicado o produto de venda em questão e anotados uma série de dados do perfil do cliente e também do momento sócio econômico. Alguns aceitam a subscrição bancária em troca do pagamento do juros após um período de carência e outros simplesmente não aceitam. 
 
-Assim o banco quiz saber o que influencia o cliente na subscrição ao produto de venda em questão, se há possibilidade da predição de subscrição ao produto e quais dados dos perfis dos cliente ou quais dados do momento sócio econômico influenciam essa predição, porque se o custo-benefício de contratar uma empresa de telemarketing não compensar, poderia simplesmente diminuir o gasto com propaganda de acordo com Moro et al. \cite{Moro:2014}. Estes por meio de modelo obtidos por meio de Neural Network, decision tree e SVI obtiveram métricas, como accuracy, prediction, recall com valores cerca de 90\%, fizemos algo similar mas utilizando o modelamento dos dados baseado em Logistic Regression, com a diferença que tratamos melhor os dados por meio de geração de mais features por meio de variáveis dummy a partir de dados categóricos. De 20 features originais, ficaram ao todo 54 features. Balanceamentos a amostra com respostas positivas e negativas à campanha utilizando a técnica SMOTE (Synthetic Minority Over-sampling Technique), isso mitigaria a geração de falsos positivos (FP) during o cross-validation (CRV) e durante o teste, normalizamos os dados antes de aplicar o método Logistic Regression, o que tornaria as metricas mais precisas, como o accuracy, precision, recall e f1-score, após a geração da matriz de confusão. Enquanto Moro et al. \cite{Moro:2014} utilizaram sensibility analysis e decision tree para classificar as features mais importantes para
-a análise qualitativa, utilizamos estatísticas básicas como média, desvio padrão, quantificação dos dados e a técnica RFE, inclusive o DT, para seleção das features mais importantes. 
+Assim o banco quiz saber o que influencia o cliente na subscrição ao produto de venda em questão, se há possibilidade da predição de subscrição ao produto e quais dados dos perfis dos cliente ou quais dados do momento sócio econômico influenciam essa predição, porque se o custo-benefício de contratar uma empresa de telemarketing não compensar, poderia simplesmente diminuir o gasto com propaganda de acordo com Moro et al. \cite{Moro:2014}. Estes por meio de modelo obtidos por meio de Neural Network, decision tree e SVI obtiveram a métrica AUC com no máximo escore de 80\%, fizemos algo similar mas utilizando o modelamento dos dados com o LR e DT, com a diferença que tratamos melhor os dados por meio de geração de mais features por meio de variáveis dummy a partir de dados categóricos. Das 20 features originais, resultaram ao todo 54 features. Balanceamentos da amostra com respostas positivas e negativas à campanha utilizando a técnica SMOTE (Synthetic Minority Over-sampling Technique), isso mitigaria a geração de FPs durante o CRV e durante o teste, normalizamos os dados antes de aplicar o método LR e DT, o que tornaria as metricas mais precisas, como o accuracy, precision, recall e f1-score, após a geração da matriz de confusão. Enquanto Moro et al. \cite{Moro:2014} utilizaram sensibility analysis e decision tree para classificar as features mais importantes para
+a análise qualitativa, utilizamos estatísticas básicas como média, desvio padrão, quantificação dos dados e a técnica DT e RFE, para seleção das features mais importantes. 
 Essa técnica foi usado por Susan Li \cite{TowardsDataScience:2017} para seleção das features antes do modelamento, o qual resultou em métricas muito boas, mas não ótima, com 
 métricas de 74\%.  Fizemos como Nelson Chris \cite{Medium:2019}, que utilizou todas as features originais e geradas, o mesmo também obteve um ótimo resultado com métricas em 91\%. Porém 
 o nosso escore foi melhor atingindo o escore com mais de 94\% com o LR e 91\% com o DT, a diferença que utilizamos SMOTE, como realizado por Susan Li \cite{TowardsDataScience:2017}. 
 
-Para reforçar o aprendizado de Inteligência Artificial, somando com a fácil disponibilização públlica do dataset na UCI \cite{UCI:2014}, também encontrado no sítio kaggle.com, o qual se observou que se tratava de uma caso típico de aprendizado supervisionado, onde a variável dependente é simplesmente aceitação ou não da subscrição bancária e os dados independentes eram valores categóricos (e.g. profissão, estado conjugal, educação, etc.) e dados numéricos (e.g. idade, número de contatos, valor do euribor3m, etc.), a utilização do método Logistic Regression foi entendido como uma opção viável, reforçado pelo fato que o seu módulo existe no Python sklearn.
+Para reforçar o aprendizado de Inteligência Artificial, somando com a fácil disponibilização públlica do dataset na UCI \cite{UCI:2014}, também encontrado no sítio kaggle.com, o qual se observou que se tratava de uma caso típico de aprendizado supervisionado, onde a variável dependente é simplesmente aceitação ou não da subscrição bancária e os dados independentes eram valores categóricos (e.g. profissão, estado conjugal, educação, etc.) e dados numéricos (e.g. idade, número de contatos, valor do euribor3m, etc.), a utilização do método LR foi entendido como uma opção viável, reforçado pelo fato que o seu módulo existe no Python sklearn.
 
 Regressão Logística, ou Logistic Regression, em Machine Learning é uma técnica de aprendizado supervisionado que consiste na regressão de um modelo matemático que relaciona variáveis de entrada $X{_i} (i=1,2,...,n)$ a diferentes grupos de classificação. Para isso, é usada a função \textit{Sigmoid} para determinar a probabilidade de um determinado conjunto de variáveis a pertencerem a determinado grupo:
 
@@ -183,7 +184,7 @@ A variável dependente y foi transformado em dados binários, em vez dos dados cat
 
 Foi criado uma nova variável independente pdays\_no\_contact derivado do pdays, de forma que o valor 999 ficou com o valor 1 (não houve contato) e 0 (houve contato), seguindo orientação do Nelson Chris \cite{Medium:2019}. 
 
-Foi verificado inicialmente que houve 11.26\% de subscrição e 88.72\% de não subscrição no ds bank-additional-full.csv. Se utilizado o ds de treinamento sem balanceamento, haveria o risco de o modelo fazer predição com maior número de FP (Falso Positivo). Seguindo a recomendação da Susan Li \cite{TowardsDataScience:2017} , o dataset de treinamento foi balanceado utilizando o algoritmo SMOTE (Synthetic Minority Oversampling Tecnique).
+Foi verificado inicialmente que houve 11.26\% de subscrição e 88.72\% de não subscrição no ds bank-additional-full.csv. Se utilizado o ds de treinamento sem balanceamento, haveria o risco de o modelo fazer predição com maior número de FP. Seguindo a recomendação da Susan Li \cite{TowardsDataScience:2017} , o dataset de treinamento foi balanceado utilizando o algoritmo SMOTE.
 
 As variáveis categóricas job, marital, education, default, housing, loan, month, day\_of\_week, poutcome foram transformadas em variáveis dummy, cujos valores viraram binários por meio da rotina get\_dummies do módulo pandas. Assim como exemplo, a variável categórica marital, que tem valores married, single, unknown, viraram novas variáveis binárias marital\_married, marital\_single, marital\_married. Tanto Nelson Chris como Susan Li utilizaram a técnica de criação de variáveis dummy para variáveis categóricas.
 
@@ -194,16 +195,16 @@ Realizamos também a normalização do ds das variáveis independentes ("X") por mei
 \subsection{Seleção das Features}
 
 Com a utilização do get\_dummies, o número de variáveis aumentou de 20 para 54 variáveis independentes. Assim, Susan Li \cite{TowardsDataScience:2017} utilizou a técnica RFE para reduzir a quantidade de features, basicamente lista-se as variáveis independente com os seus pValue por meio da função summary2 do módulo Logit. Aquelas features que tiveram o pValue maiores que 5\% seriam retirados manualmente da amostra. Mas o resultado não ficou bom, o precision, recall, f1-score ficaram em 74\%. Resolvemos fazer como Nelson
-Chris \cite{Medium:2019}, manter todos os 54 features ou variáveis independentes. Durante o treinamento e no cross-validation (CRV), tiveram alto desempenho, com todas as métricas
+Chris \cite{Medium:2019}, manter todos os 54 features ou variáveis independentes. Durante o treinamento e no CRV, tiveram alto desempenho, com todas as métricas
 maiores que 90\%. 
 
 A separação da variável dependente y e das variáveis dependentes X foram realizados pela função loc do módulo pandas.  A função train\_test\_split realizou a separação da
 amostra de treinamento em 90\% e amostra de teste em 10\%. Obtendo assim variáveis y e X de treinamento e teste. E o balanceamento das linhas com respostas positivas ("yes" ou 1)
-e respostas negativas ("no" ou 0) das variáveis de y e X de treinamento e teste foram realizados pelo módulo SMOTE.
+e respostas negativas ("no" ou 0) das variáveis de y e X das amostras de treinamento e teste foram realizados pelo módulo SMOTE.
 
 \subsection{Treinamento dos Dados}
 
-Os dados de treinamento foram treinado com o algoritmo LogisticRegression do módulo sklearn.linear\_model, e também com o DecisionTreeClassifer. O modelo foi obtido a partir da função fit (fitness) entre os dados de treinamento balanceados e normalizados de X e y.
+Os dados foram treinado com o algoritmo LogisticRegression do módulo sklearn.linear\_model, e também com o DecisionTreeClassifer. O modelo foi obtido a partir da função fit (fitness) entre os dados de treinamento balanceados e normalizados de X e y.
 
 
 \subsection{Validação do Modelo (Cross Validation-CRV)}
@@ -212,25 +213,24 @@ O modelo obtido a partir da amostra de treinamento foi inicialmente validado pel
 Na próxima etapa foi obtido o vetor de predição do y por meio da função predict do modelo. Com a qual foi gerado uma matriz de confusão entre o y real e o y predito. E também o
 relatório de classificação por meio da função classification\_report do módulo sklearn.metrics, para obter os valores de accuracy, precision, recall e f1-score.
 
-A matriz de confusão mostra uma matriz de 2 x 2, onde estão registrados os números de Falsos Positivos (FP), Falsos Negativos (FN), Verdadeiros Positivos (TP) e Verdadeiros Negativos (TN). Respostas verdadeiras são TP+TN, respostas falsas são FP+FN. 
+A matriz de confusão mostra uma matriz de 2 x 2, onde estão registrados os números de FPs, FNs, TPs e TNs. Respostas verdadeiras são TP+TN, respostas falsas são FP+FN. 
 
-A curva ROC é gerado com o módulo roc\_auc\_score to sklearn, bem como os valores de AUC (Area Under the Curve).
+A curva ROC é gerado com o módulo roc\_auc\_score do sklearn, bem como os valores de AUC (Area Under the Curve).
 
 
 \subsection{Teste do Modelo}
 Similar à metodologia aplicado ao CRV, mas aplicado à amostra de teste.
 
 \subsection{Análise Qualitativa}
-Foram utilizados os dados de treinamento para realização da análise qualitativa, levando-se em conta que a distribuição dos dados é a mesma que a da amostra de teste.
-Como o desempenho das métricas no CRV é similar ao de teste, se entende que a distribuição dos dados seja a mesma.
+Foram utilizados os dados de treinamento para realização da análise qualitativa, levando-se em conta que a distribuição dos dados é a mesma que a da amostra de teste, dado que o desempenho no CRV é similar ao de teste.
 
-Como não foram descartados nenhuma feature, todas as features serão analisados com mais profundidade, de forma que serão detectados as features com menor relevância e aquelas 
+Como não foram descartados nenhuma feature,  serão buscadas as features com menor relevância e aquelas 
 com maiores chances de obter respostas positivas da campanha. Assim, será inicialmente verificado o pvalue das features com a função summary2 do módulo stasmodels.api,
 aquelas features com valores maiores que 1\% seriam as features com menos relevantes. Por exemplo, education\_illiterate tem pvalue 8.72\% poderia ser considerado com
 menor relevância. A amostra de dados tem poucos casos de illiterate (analfabetos) comparados ao university.degree (nível universitário). Para verificar a importância das features,
 foi utilizado o RFE, assim foram listados as 50, 40, 30, 20, 10 features mais importantes. 
 
-As estatísticas básicas (média, desvio padrão)das variáveis numéricas foram obtidas com a função describe() do pandas. E quantificação dos dados das variáveis categóricas foram realizadas
+As estatísticas básicas (média, desvio padrão) das variáveis numéricas foram obtidas com a função describe() do pandas. E quantificação dos dados das variáveis categóricas foram realizadas
 pela função value\_counts() do pandas.
 
 A comparação de grupos de variáveis numéricas de amostras com respostas positivas e negativas foi realizado com a função ttest\_ind do módulo scipy.stats. O pvalue \textless 1\% 
@@ -241,7 +241,7 @@ Para efeito de comparação, será também utilizado o classificador Decision Tree (
 
 \section{Trabalho Proposto}
 
-O trabalho proposto será o desenvolvimento do modelo de predição de subscrição ao depósito bancário por meio do processo explicado no modelo da Figura \ref{strategy}. Basicamente, essa busca ocorrerá de forma interativa tratando o dataset da UCI \cite{UCI:2014}. A aceitação do modelo no CRV e no teste de modelo será por meio dos valores das métricas. Espera-se um desempenho superior a 90\% nas métricas de precision, recall, AUC, F1-score.
+O trabalho proposto será o desenvolvimento do modelo de predição de subscrição ao depósito bancário por meio do processo explicado no modelo da Figura \ref{strategy}. Basicamente, essa busca ocorrerá de forma interativa utilizando o dataset da UCI \cite{UCI:2014}. A aceitação do modelo no CRV e no teste de modelo será por meio dos valores das métricas. Espera-se um desempenho superior a 90\% nas métricas de precision, recall, AUC, F1-score.
 
 \begin{figure}[htbp]
 	\centerline{\includegraphics[scale=0.35]{figuras/strategy.jpg}}
@@ -251,10 +251,10 @@ O trabalho proposto será o desenvolvimento do modelo de predição de subscrição a
 
 
 \subsection{Tabelas}
-Aqui a amostra de teste é submetida ao mesmo modelo obtido na fase de treinamento, validado com o teste CRV (Cross-Validation). 
+Aqui a amostra de teste é submetida ao mesmo modelo obtido na fase de treinamento, validado com o teste CRV. 
 Será o obtido a matriz de confusão, medido o accuracy, precision, recall, F1-score, AUC e também será gerado o gráfico ROC.
 
-A tabela \ref{tab:desempenho} contém os valores das métricas obtidas durante o CRV e teste do modelo.
+A tabela \ref{tab:desempenho} contém os valores das métricas obtidas durante o CRV e teste do modelo. Observa-se que o teste de CRV no treinamento do modelo tem o melhor desempenho.
 %
 \begin{center}
 	\begin{table}[!ht]
@@ -270,6 +270,10 @@ A tabela \ref{tab:desempenho} contém os valores das métricas obtidas durante o C
 			\hline        %% extra \hline at bottom of table
 			LR(Teste)&10\%&0.95&0.95&0.95&0.95&0.95\\     %% no "&" at start of row
 			\hline        %% extra \hline at bottom of table
+			DT(CRV)&90\%&1.00&1.00&1.00&1.00&1.00\\     %% no "&" at start of row
+			\hline
+			DT(Teste)&10\%&0.91&0.91&0.91&0.91&0.91\\     %% no "&" at start of row
+			\hline        %% extra \hline at bottom of table
 	\end{tabular}}
 \end{table}
 \end{center}
@@ -277,7 +281,7 @@ A tabela \ref{tab:desempenho} contém os valores das métricas obtidas durante o C
 A tabela \ref{qualy} é um sumário qualitativo das features obtida do Jupyter notebook Python3.ipynb.
 
 \begin{center}
-  \small\addtolength{\tabcolsep}{-6pt}
+  \small\addtolength{\tabcolsep}{-6.2pt}
   \begin{table}[!ht]       
         \caption{Tabela qualitativa das features}
         \label{qualy}
@@ -349,9 +353,7 @@ A tabela \ref{qualy} é um sumário qualitativo das features obtida do Jupyter not
 O RFE 50+ significa que a feature seria eliminada se houvessem 50 features mais importante entre 54 possíveis. E da mesma forma, há 40+, 30+, 20+, 10+. 
 A feature com 50+ significa que é não significante (N.S.), possivelmente devido a poucos casos na amostra e também foi detectado
 um bug na feature default\_yes, o índice de captura não existia, portanto considerado também não significante (N.S.). Uma feature com 20+ indica que pode estar
-no grupo dos 30, 40 e 50 mais importantes.
-
-O dash (-) indica que não existe o valor ou pode ser insignificante.
+no grupo dos 30, 40 e 50 mais importantes. O dash (-) indica que não existe o valor ou pode ser insignificante.
 
 O RFE (10) indica que a feature está entre as 10 mais importantes e, assim, pode estar em quaisquer grupos dos 20, 30, 40, 50 features mais importantes.
 
@@ -359,7 +361,7 @@ Uma feature pode não ser significativa para a determinação do y (aceitação ou nã
 na intepretação do perfil do cliente.
 
 A coluna Valor Estatístico mostra valores para os casos positivos (aceitou o plano de depósito bancário) e eventualmente os casos negativos (i.e. não aceitou o plano) são 
-postas na coluna Comentário. Assim, a notação no(....) indica valores em quantidade obtidos para os casos negativos.
+postas na coluna Comentário. Assim, a notação no(....) indica valores em quantidade obtidos para os casos negativos. E a notação c... indica número de chamadas ao celulares, t... indica o número de chamadas ao telefone fixo.
 
 A notação média  (medium) $\pm$ desvio padrão (std) são utilizadas para as features numéricas.
 
@@ -420,14 +422,14 @@ DT, LR e RFE.
 	\label{comparasion}
 \end{figure}
 
-A figura \ref{comparasion} ilustra que há um melhor equilíbrio entre as features numéricas e categóricas e mostra onde estão posicionadas as features mais importantes para o DT utilizando o Logistic Regression e RFE.
+A figura \ref{comparasion} ilustra que há um melhor equilíbrio entre as features numéricas e categóricas e mostra onde estão posicionadas as features mais importantes para o DT e também para o fazendo o mesmo com o Logistic Regression e RFE.
 
 \section{Resultados e Discussão}
-A campanha de promoção de vendas de depósito bancário a termo, por meio de telemarketing, obteve subscrição de apenas 11\%, obtido na etapa de preparação dos dados. Com os dados preparados, balanceados e normalizados, foi possível treinar finalmente os dados. O modelo ajustado com LogisticRegression do módulo sklearn, obteve um escore de 93\% durante a fase de treinamento. Depois na fase de CRV, mostrando-se um modelo bastante equilibrado, confirmou-se o desempenho das métricas com accuracy (acurácia) de 94\%, weighted avg (média ponderada) com 94\% de precision (precisão), 94\% de recall, 94\% de f1-score e 89.4\% de AUC. Na fase de teste com 10\% do dataset, foi realizado o ajuste com o modelo e foi obtido uma classificação com o accuracy de 95\%, weighted avg de precision de 95\%, recall de 95\%, f1-score de 95\% e AUC de 95\%. Mostrando que o modelo obtido na fase de treinamento é também ajustado para a fase de teste. As métricas tiveram um bom desempenho porque não foram descartados nenhumas das 54 features, inclusive aquelas geradas pelas variáveis dummy.
+A campanha de promoção de vendas de depósito bancário a termo, por meio de telemarketing, obteve subscrição de apenas 11\%, observado na etapa de preparação dos dados. Com os dados preparados, balanceados e normalizados, foi possível treinar finalmente os dados. O modelo ajustado com LogisticRegression do módulo sklearn, obteve um escore de 93\% durante a fase de treinamento. Depois na fase de CRV, mostrou-se um modelo bastante equilibrado, confirmou-se o desempenho das métricas com accuracy de 94\%, weighted avg  com 94\% de precision, 94\% de recall, 94\% de f1-score e 89.4\% de AUC. Na fase de teste com 10\% do dataset, foi realizado o ajuste com o modelo e foi obtido uma classificação com o accuracy de 95\%, weighted avg de precision de 95\%, recall de 95\%, f1-score de 95\% e AUC de 95\%. Mostrando que o modelo obtido na fase de treinamento é também ajustado para a fase de teste. As métricas tiveram um bom desempenho porque não foram descartados nenhumas das 54 features, inclusive aquelas geradas pelas variáveis dummy.
 
-Na análise qualitativa foi possível entender melhor os perfis dos clientes que aceitaram a subscrição da campanha do depósito a termo. Estes tem em média 40 anos, tem formação no mínimo com ensino primário (de 9 anos) até o nível universitário, trabalham na maioria como operário (blue-collar), aposentados, técnicos, em menor grau funcionário administrativo, serviços, até estudante. Uma proporção de 64\% de casados e 35\% de solteiros. Menos de 5\% tem empréstimo pessoal. Apesar da maioria desses clientes não terem sido abordados anteriormente em nenhuma campanha anterior, aqueles que foram abordados com sucesso na campanha passada se subscreveram com maior chance de sucesso na atual campanha. Estes foram abordados 2.78 vezes mais anteriormente que aqueles que não aceitaram nesta campanha. Na maior parte das vezes, os clientes foram abordados por meio de celular. Daqueles que não aceitaram, 40\% foram atendidos por meio de telefone fixo. A duração média da chamada foi de 9.1 minutos contra 3.7 minutos para quem não se subscreveu. Aparentemente, o cliente que vai se subscrever tende a extender mais a duração da chamada. Os meses de maior abordagem ao cliente foram maio, junho, julho e agosto -correspondente ao verão europeu - porém novembro foi uma das 20 mais importante variável, segundo o RFE. Segunda-feira, foi considerado uma das 10 mais importante feature, por alguma razão. O cliente teve em média 1.72 contatos contra 2.62 daqueles clientes que não aceitaram a campanha. As variáveis do momento sócio-econônomico, apesar de ter sido testada com o t-test do sklearn com pvalue \textless 1\%, não dá para garantir que os índices sejam diferentes entre os casos positivos e os negativos, pois as médias estão entre 1-2\% entre um e outro, estes são o caso do número de empregos, taxa de variação do emprego, índice do preço ao consumidor, e índice de confiança do consumidor, exceto a euribor3m que estava 55\% do valor dos casos negativos, pois nem configuram entre os 30 features mais importantes, segundo o RFE.
+Na análise qualitativa foi possível entender melhor os perfis dos clientes que aceitaram a subscrição da campanha do depósito a termo. Estes tem em média 40 anos, tem formação no mínimo com ensino primário (de 9 anos) até o nível universitário, trabalham na maioria como operário (blue-collar), aposentados, técnicos, em menor grau funcionário administrativo, serviços, até estudante. Uma proporção de 64\% de casados e 35\% de solteiros. Menos de 5\% tem empréstimo pessoal. Apesar da maioria desses clientes não terem sido abordados anteriormente em nenhuma campanha anterior, aqueles que foram abordados com sucesso na campanha passada se subscreveram com maior chance de sucesso na atual campanha. Estes foram abordados 2.78 vezes mais anteriormente que aqueles que não aceitaram nesta campanha. Na maior parte das vezes, os clientes foram abordados por meio de celular. Daqueles que não aceitaram, 40\% foram atendidos por meio de telefone fixo. A duração média da chamada foi de 9.1 minutos contra 3.7 minutos para quem não se subscreveu. Aparentemente, o cliente que vai se subscrever tende a extender mais a duração da chamada. Os meses de maior abordagem ao cliente foram maio, junho, julho e agosto, porém novembro foi uma das 20 mais importante variável, segundo o RFE. Segunda-feira, foi considerado uma das 10 mais importante feature, por alguma razão. O cliente teve em média 1.72 contatos contra 2.62 daqueles clientes que não aceitaram a campanha. As variáveis do momento sócio-econônomico, apesar de ter sido testada com o t-test do sklearn com pvalue \textless 1\%, não dá para garantir que os índices sejam diferentes entre os casos positivos e os negativos, pois as médias estão entre 1-2\% entre um e outro, estes são o caso do número de empregos, taxa de variação do emprego, índice do preço ao consumidor, e índice de confiança do consumidor, exceto a euribor3m que estava 55\% do valor dos casos negativos, pois nem configuram entre os 30 features mais importantes, segundo o RFE.
 
-No entanto, foram observados que com o RFE, que na amostra com as 40 mais importantes features, penaliza mais as features numéricas como age, duration, campaign, pdays, cons.price.idx, cons.conf.idx, euribor3m, nr.employed do que as features categóricas. E exige um adicional esforço com estatística básica para realizar análise qualitativa, a abstração recae sobre os valores das features categóricas que se dá por meio de quantificação dos valores. Dessa forma, utilizamos também o classificação do Logistic Regression para as features mais importantes (Feature Importances). Uma vantagem dessa classificação é que os valores positivos dessas features são predições para aquelas features que influenciam as respostas positivas (classe 1) e as negativas (classe 0). Observamos que a taxa euribor3m no topo dos mais importantes, seguida de duration (duração em segundos da abordagem ao cliente), poutcome\_success (sucesso na campanha passada), education\_illiterate (analfabeto), cons.price.idx (índice do preço ao consumidor), month\_mar (mês de março) e age (idade do cliente) que são todas de classe 1, as outras features são de classe 0. Pode-se observar que a classificação do Logistic Regression, não penaliza as features de valores numéricos, nem as features menos significativas. A única feature listada entre as 10 mais importante no RFE é o poutcome\_success, que também é importante no Logistic Regression. Porém o Logistic Regression penaliza as features de cunho sócio econômicos, como o nr.employed (numéro de trabalhadores empregados), emp.var.rate (taxa de variação do emprego), education-university.degree eeducation.university (universitário), job\_blue\_collar (operário), diferente do RFE, que seriam importante para a classe 1. Não haveria razão lógica para listar o education\_illiterate entre as principais, pois casos de analfabetos não significativos.
+No entanto, foram observados que com o RFE, que na amostra com as 40 mais importantes features, penaliza mais as features numéricas como age, duration, campaign, pdays, cons.price.idx, cons.conf.idx, euribor3m, nr.employed do que as features categóricas. E exige um adicional esforço com estatística básica para realizar análise qualitativa, a abstração recaem sobre os valores das features categóricas que se dá por meio de quantificação dos valores. Dessa forma, utilizamos também o classificação do LR para as features mais importantes (Feature Importances). Uma vantagem dessa classificação é que os valores positivos dessas features são predições para aquelas features que influenciam as respostas positivas (classe 1) e as negativas (classe 0). Observamos que a taxa euribor3m no topo dos mais importantes, seguida de duration (duração em segundos da abordagem ao cliente), poutcome\_success (sucesso na campanha passada), education\_illiterate (analfabeto), cons.price.idx (índice do preço ao consumidor), month\_mar (mês de março) e age (idade do cliente) que são todas de classe 1, as outras features são de classe 0. Pode-se observar que a classificação do Logistic Regression, não penaliza as features de valores numéricos e nem as features menos significativas, isto não seria aceitável. A única feature listada entre as 10 mais importante no RFE é o poutcome\_success, que também é importante no Logistic Regression. Porém o Logistic Regression penaliza as features sócio econômicos, como o nr.employed (número de trabalhadores ocupados), emp.var.rate (taxa de variação do emprego), education-university.degree education.university (universitário), job\_blue\_collar (operário), diferente do RFE, que seriam importante para a classe 1. Não haveria razão para listar o education\_illiterate entre as principais, pois casos de analfabetos não significativos, como foi mostrado com o pvalue do Logit.
 
 O Decision Tree (DT) parece realizar uma classificação mais balanceada entre as features categóricas e numéricas, tanto com os atributos do clientes e com as métricas sócio econômicos. No topo das features mais importante, estão o duration, nr.employed, cons.conf.idx, contact, euribor3m, age, cons.price.idx, campaign, education\_high.school, day\_of\_week\_mon. E as features realmente menos significativas, inclusive para o RFE, default\_yes, marital\_unknown, education\_illiterate, month\_mar, housing\_unknown, job\_unknown, month\_dec, pdays\_no\_contact. E a vantagem do DT, é que se pode gerar um grafo com a árvore de decisão, onde há nós de decisão com subvalores das features numéricas, assim há vários nós de decisão com subvalores de duration, habilitando maior abstração para a análise qualitativa.
 
@@ -435,11 +437,8 @@ O Decision Tree (DT) parece realizar uma classificação mais balanceada entre as 
 Este projeto consolidou o conhecimento de todas as etapas para realização de um projeto de Machine Learning, desde a extração, tratamento, seleção, normalização e balanceamento dos dados,
 antes do treinamento da amostra ou dataset com algum modelo, a obtenção das métricas com valores com qualidade depende muito de como são tratados os dados nas etapas iniciais.
 
-O ponto forte do nosso projeto foi o procedimento adotado na etapa inicial de preparação dos dados. Os pontos fracos seriam a análise qualitativa, a classificação das features mais importantes (feature importance) varia conforme o classificador utilizado, no entanto, o decision tree parece ser mais equilibrado entre outros como o Logistic Regression e o RFE. DT tem a 
-vantagem de poder realizar uma categorização com uma abstração muito maior, por meio de grafos da árvore de decisão.
-
-A recomendação básica para quaisquer interessados em treinar dataset com tipos numéricos e categóricos é utilizar o nosso procedimento na etapa inicial de preparação dos dados.
-Existe uma boa chance de se obter um bom modelo de predição. O classificador decision tree em caso de dataset composta por features categóricas e numéricas é o mais recomendável.
+O ponto forte do nosso projeto foi o procedimento adotado na etapa inicial de preparação dos dados. Os pontos fracos seriam a análise qualitativa, a classificação das features mais importantes varia conforme o classificador utilizado, no entanto, o decision tree parece ser mais equilibrado entre outros como o Logistic Regression e o RFE. DT tem a 
+vantagem de poder realizar uma categorização com uma abstração muito maior, por meio de grafos da árvore de decisão. Em caso de dataset composta por features numéricos e categóricos, a recomendação é utilizar o nosso procedimento na fase de preparação dos dados e o classificador Decision Tree.
 
 
 
